@@ -70,7 +70,7 @@ public class json extends HttpServlet {
             strJson = json.strJson(oReplyBean.getStatus(), oReplyBean.getJson());
         } catch (Exception e) {
             response.setStatus(500);
-            strJson = json.strJson(500, "Server Error");
+            strJson = json.strJson(500, "Server Error-->"+e.getMessage());
             if (ConfigurationConstants.environment == EnvironmentConstans.Debug) {
                 PrintWriter out = response.getWriter();
                 out.println(e.getMessage());

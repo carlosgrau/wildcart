@@ -18,13 +18,14 @@ import net.daw.dao.publicDaoInterface.DaoInterface;
  *
  * @author a021792876p
  */
-public class LineaDao extends GenericDaoImplementation implements DaoInterface{
+public class LineaDao extends GenericDaoImplementation implements DaoInterface {
 
-  public LineaDao(Connection oConnection, String ob) {
+    public LineaDao(Connection oConnection, String ob) {
         super(oConnection, ob);
 
     }
-/*
+
+    /*
     public LineaBean get(int id, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
         LineaBean oLineaBean;
@@ -52,7 +53,6 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
         }
         return oLineaBean;
     }
-
     public int remove(int id) throws Exception {
         int iRes = 0;
         String strSQL = "DELETE FROM " + ob + " WHERE id=?";
@@ -70,7 +70,6 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
         }
         return iRes;
     }
-
     public int getcount() throws Exception {
         String strSQL = "SELECT COUNT(id) FROM " + ob;
         int res = 0;
@@ -94,7 +93,6 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
         }
         return res;
     }
-
     public LineaBean create(LineaBean oLineaBean) throws Exception {
         String strSQL = "INSERT INTO " + ob + " (" + ob + ".id, " + ob + ".cantidad, " + ob + ".id_producto, " + ob + ".id_factura) VALUES (NULL, ?, ?, ?); ";
         ResultSet oResultSet = null;
@@ -123,17 +121,14 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
         }
         return oLineaBean;
     }
-
     public int update(LineaBean oLineaBean) throws Exception {
        int iResult = 0;
         String strSQL = "UPDATE " + ob + " SET ";
         strSQL += oLineaBean.getPairs(ob);
-
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
             iResult = oPreparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new Exception("Error en Dao update de " + ob+"--"+e.getMessage(), e);
         } finally {
@@ -143,7 +138,6 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
         }
         return iResult;
     }
-
     public ArrayList<LineaBean> getpage(int iRpp, int iPage) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<LineaBean> alLineaBean;
@@ -177,9 +171,8 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
             throw new Exception("Error en Dao getpage de " + ob);
         }
         return alLineaBean;
-
     }
-*/
+     */
     public ArrayList<LineaBean> getLineaFactura(int iRpp, int iPage, int idFactura, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<LineaBean> alLineaBean;
@@ -218,20 +211,18 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
     }
 
     public int getcountxlinea(int idFactura) throws Exception {
-        String strSQL = "SELECT COUNT(id) FROM " + ob;
-        strSQL += " WHERE id_factura=? ";
-        int res = 0;
+        String strSQL = "SELECT COUNT(id) from " + ob + " where id_factura=" + idFactura;
+        int resultado = 0;
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setInt(1, idFactura);
             oResultSet = oPreparedStatement.executeQuery();
-            if (oResultSet.next()) {
-                res = oResultSet.getInt(1);
+            while (oResultSet.next()) {
+                resultado = oResultSet.getInt(1);
             }
-        } catch (SQLException e) {
-            throw new Exception("Error en Dao get de " + ob, e);
+        } catch (Exception e) {
+            throw new Exception("Error en Dao getCountLinea de " + ob + " " + e.getMessage());
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -240,6 +231,7 @@ public class LineaDao extends GenericDaoImplementation implements DaoInterface{
                 oPreparedStatement.close();
             }
         }
-        return res;
+        return resultado;
+
     }
 }

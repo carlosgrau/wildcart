@@ -240,9 +240,9 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
                 doc.text(158, 285, (precio * (iva / 100 + 1)).toFixed(2).toString());
 
                 doc.output('save', 'Factura-' + id + '.pdf'); //Try to save PDF as a file (not works on ie before 10, and some mobile devices)
-                doc.output('datauristring');        //returns the data uri string
-                doc.output('datauri');              //opens the data uri in current window
-                doc.output('dataurlnewwindow');     //opens the data uri in new window
+//                doc.output('datauristring');        //returns the data uri string
+//                doc.output('datauri');              //opens the data uri in current window
+//                doc.output('dataurlnewwindow');     //opens the data uri in new window
             }, function (response) {
                 $scope.status = response.status;
                 $scope.ajaxLineasFactura = response.data.message || 'Request failed';
