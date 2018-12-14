@@ -20,9 +20,6 @@ import net.daw.service.publicServiceInterface.ServiceInterface;
 
 public class LineaService extends GenericServiceImplementation implements ServiceInterface {
 
-    HttpServletRequest oRequest;
-    String ob = null;
-
     public LineaService(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");

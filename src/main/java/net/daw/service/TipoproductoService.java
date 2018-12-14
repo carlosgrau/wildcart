@@ -19,7 +19,7 @@ public class TipoproductoService extends GenericServiceImplementation implements
     String ob = null;
 
     public TipoproductoService(HttpServletRequest oRequest) {
- super(oRequest);
+    super(oRequest);
         ob = oRequest.getParameter("ob");
     }
 }

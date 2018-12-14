@@ -14,7 +14,6 @@ import net.daw.service.UsuarioService;
 
 public class ServiceFactory {
 
-
     public static ReplyBean executeService(HttpServletRequest oRequest) throws Exception {
 
         String ob = oRequest.getParameter("ob");
@@ -27,7 +26,7 @@ public class ServiceFactory {
         } else {
 
             UsuarioBean sesion = (UsuarioBean) oRequest.getSession().getAttribute("user");
-        
+
             switch (sesion.getObj_tipoUsuario().getId()) {
                 case 1:
                     switch (ob) {
@@ -40,9 +39,6 @@ public class ServiceFactory {
                                 case "empty":
                                     oReplyBean = oCarritoService.empty();
                                     break;
-                                /*case "emptyById":
-                                    oReplyBean = oCarritoService.emptyById();
-                                    break;*/
                                 case "show":
                                     oReplyBean = oCarritoService.show();
                                     break;
@@ -52,9 +48,6 @@ public class ServiceFactory {
                                 case "buy":
                                     oReplyBean = oCarritoService.buy();
                                     break;
-                              /*  case "showSessionAll":
-                                    oReplyBean = oCarritoService.showSessionAll();
-                                    break;*/
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                     break;
@@ -84,7 +77,7 @@ public class ServiceFactory {
                                 case "getpage":
                                     oReplyBean = oTipousuarioService.getpage();
                                     break;
-                               /* case "fill":
+                                /* case "fill":
                                     oReplyBean = oTipousuarioService.fill();
                                     break;*/
                                 default:
@@ -195,7 +188,7 @@ public class ServiceFactory {
                                 case "getcountxlinea":
                                     oReplyBean = oLineaService.getcountxlinea();
                                     break;
-                               /* case "fill":
+                                /* case "fill":
                                     oReplyBean = oLineaService.fill();
                                     break;*/
                                 default:
@@ -257,9 +250,6 @@ public class ServiceFactory {
                                 case "getpage":
                                     oReplyBean = oTipoproductoService.getpage();
                                     break;
-                                /*case "fill":
-                                    oReplyBean = oTipoproductoService.fill();
-                                    break;*/
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                     break;
@@ -281,9 +271,6 @@ public class ServiceFactory {
                                 case "empty":
                                     oReplyBean = oCarritoService.empty();
                                     break;
-                              /*  case "emptyById":
-                                    oReplyBean = oCarritoService.emptyById();
-                                    break;*/
                                 case "show":
                                     oReplyBean = oCarritoService.show();
                                     break;
@@ -298,26 +285,18 @@ public class ServiceFactory {
                                     break;
                             }
                             break;
+                       
                         case "usuario":
                             UsuarioService oUsuarioService = new UsuarioService(oRequest);
                             switch (op) {
                                 case "get":
                                     oReplyBean = oUsuarioService.get();
                                     break;
-                                case "create":
-                                    oReplyBean = oUsuarioService.create();
-                                    break;
                                 case "update":
                                     oReplyBean = oUsuarioService.update();
                                     break;
                                 case "remove":
                                     oReplyBean = oUsuarioService.remove();
-                                    break;
-                                case "getcount":
-                                    oReplyBean = oUsuarioService.getcount();
-                                    break;
-                                case "getpage":
-                                    oReplyBean = oUsuarioService.getpage();
                                     break;
                                 case "fill":
                                     oReplyBean = oUsuarioService.fill();
@@ -331,19 +310,84 @@ public class ServiceFactory {
                                 case "check":
                                     oReplyBean = oUsuarioService.check();
                                     break;
-                               /* case "updatepass":
-                                    oReplyBean = oUsuarioService.updatePass();
-                                    break;*/
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                     break;
                             }
                             break;
-                        default:
-                            oReplyBean = new ReplyBean(500, "Object doesn't exist");
+                        case "factura":
+                            FacturaService oFacturaService = new FacturaService(oRequest);
+                            switch (op) {
+                                case "get":
+                                    oReplyBean = oFacturaService.get();
+                                    break;
+                                case "getcountfacuser":
+                                    oReplyBean = oFacturaService.getcountFacturaUser();
+                                    break;
+                                case "getpagexusuario":
+                                    oReplyBean = oFacturaService.getpageXusuario();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
+                        case "linea":
+                            LineaService oLineaService = new LineaService(oRequest);
+                            String pene ="pene caca culo pedo pis-"+oRequest.getParameter("id");
+                            switch (op) {
+                                case "get":
+                                    oReplyBean = oLineaService.get();
+                                    break;
+                                case "getpage":
+                                    oReplyBean = oLineaService.getpage();
+                                    break;
+                                case "getlineafactura":
+                                    oReplyBean = oLineaService.getLineaFactura();
+                                    break;
+                                case "getcountxlinea":
+                                    oReplyBean = oLineaService.getcountxlinea();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
+
+                        case "producto":
+                            ProductoService oProductoService = new ProductoService(oRequest);
+                            switch (op) {
+                                case "get":
+                                    oReplyBean = oProductoService.get();
+                                    break;
+                                case "create":
+                                    oReplyBean = oProductoService.create();
+                                    break;
+                                case "update":
+                                    oReplyBean = oProductoService.update();
+                                    break;
+                                case "remove":
+                                    oReplyBean = oProductoService.remove();
+                                    break;
+                                case "getcount":
+                                    oReplyBean = oProductoService.getcount();
+                                    break;
+                                case "getpage":
+                                    oReplyBean = oProductoService.getpage();
+                                    break;
+                                case "fill":
+                                    oReplyBean = oProductoService.loaddata();
+                                    break;
+                                case "addimage":
+                                    oReplyBean = oProductoService.loadimage();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
                             break;
                     }
-
+                    break;
                 default:
                     oReplyBean = new ReplyBean(500, "Error Permisos");
             }

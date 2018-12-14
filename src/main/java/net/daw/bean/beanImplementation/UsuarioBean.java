@@ -113,6 +113,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         this.link_factura = link_factura;
     }
 
+    @Override
     public UsuarioBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDni(oResultSet.getString("dni"));
@@ -133,6 +134,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         return this;
     }
 
+    @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -146,6 +148,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         return strColumns;
     }
 
+    @Override
     public String getValues() {
         String strColumns = "";
         strColumns += "null,";

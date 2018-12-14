@@ -89,7 +89,7 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
     }
-
+    
     public String getPairs(String ob) {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
