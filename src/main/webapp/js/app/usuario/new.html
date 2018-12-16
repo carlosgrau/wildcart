@@ -64,6 +64,7 @@
             <span class="input-group-text fas fa-search"
                   data-toggle="modal"
                   data-target="#cadd-location-modal"></span>
+            
             <input ng-model="ajaxDatoUsuario.obj_tipoUsuario.id"
                    ng-change="tipoUsuarioRefresh()"
                    id="obj_tipoUsuario_desc"
@@ -75,6 +76,7 @@
                    ng-required="true"
                    ng-model-options="{debounce: 1000}"
                    maxlength="5">
+            
             <h3><strong>{{ajaxDatoUsuario.obj_tipoUsuario.desc}}</strong></h3>
         </div>
         <div ng-show="tipousuario" class="alert alert-danger" role="alert">

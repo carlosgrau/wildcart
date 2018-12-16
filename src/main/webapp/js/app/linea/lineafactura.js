@@ -25,6 +25,30 @@ moduleLinea.controller('lineaNewController', ['$scope', '$http', 'toolService', 
                 $scope.status = response.status;
             });
         };
+        $scope.save = function () {
+            $http({
+                method: 'GET',
+                url: 'json?ob=producto&op=update&id=2',
+                data: {json: JSON.stringify($scope.obj)}
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxDatoTipoUsuario = response.data.message;
+            }, function (response) {
+                $scope.ajaxDatoTipoUsuario = response.data.message || 'Request failed';
+                $scope.status = response.status;
+            });
+        };
+        $scope.productoRefresh = function () {
+            $http({
+                method: 'GET',
+                url: 'json?ob=producto&op=get&id=' + $scope.data.obj_Producto.id
+            }).then(function (response) {
+                $scope.data.obj_tipoUsuario = response.data.message;
+            }, function (response) {
+                $scope.data = response.data.message || 'Request failed';
+                $scope.status = response.status;
+            });
+        };
         $scope.isActive = toolService.isActive;
 
     }]);

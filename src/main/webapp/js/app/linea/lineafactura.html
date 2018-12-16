@@ -7,12 +7,12 @@
             <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
                 <h3 style="text-align: center">Editar Linea</h3>
                 <div class="form-group">
-                    
+
                     <!--ID-->
                     <label>ID</label>
                     <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.id" />
                 </div>
-                
+
                 <!--CANTIDAD-->
                 <div class="form-group" ng-class="{ 'has-error' : userForm.cantidad.$invalid && !userForm.cantidad.$pristine }">
                     <label>Cantidad</label>
@@ -28,10 +28,22 @@
                 </div>
                 <!--PRODUCTO-->
                 <div class="form-group" ng-class="{ 'has-error' : userForm.producto.$invalid && !userForm.producto.$pristine }">
-                    <label>Cantidad</label>
-                    <input type="text" class="form-control" id="producto" name="producto" ng-model="ajaxDatoTipoUsuario.obj_Producto.desc" ng-required="true"/>
-                    <div ng-show="!userForm.producto.$valid && !userForm.producto.$pristine" class="alert alert-danger" role="alert">
-                        Cantidad obligatoria.
+                    <producto-selection class="modal fade " id="cadd-location-modal" obj="ajaxDatoTipoUsuario.obj_Producto"></producto-selection>
+                    <div class="form-group">
+                        <label>Producto</label>
+                        <span class="input-group-text fas fa-search"
+
+                              data-toggle="modal"
+                              data-target="#cadd-location-modal"></span>
+                        <input type="number" 
+                               class="form-control" 
+                               id="obj_tipoUsuario_desc" 
+                               name="obj_Producto_desc" 
+                               ng-model="ajaxDatoTipoUsuario.obj_Producto.id" 
+                               ng-change="productoRefresh()" 
+                               placeholder="Seleccione un producto"/>
+                        <h3><strong>{{ajaxDatoTipoUsuario.obj_Producto.desc}}</strong></h3>
+
                     </div>
                 </div>
 

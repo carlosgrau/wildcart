@@ -3,17 +3,6 @@
 moduleCommon.controller('homeController', ['$scope', '$location', 'toolService', 'sessionService', '$http',
     function ($scope, $location, toolService, sessionService, $http) {
         
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status == 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            })
-        }
         $http({
             method: 'GET',
             url: '/json?ob=usuario&op=check'

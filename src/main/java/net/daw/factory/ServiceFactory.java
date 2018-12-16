@@ -45,6 +45,9 @@ public class ServiceFactory {
                                 case "reduce":
                                     oReplyBean = oCarritoService.reduce();
                                     break;
+                                case "update":
+                                    oReplyBean = oCarritoService.update();
+                                    break;
                                 case "buy":
                                     oReplyBean = oCarritoService.buy();
                                     break;
@@ -277,6 +280,9 @@ public class ServiceFactory {
                                 case "reduce":
                                     oReplyBean = oCarritoService.reduce();
                                     break;
+                                case "update":
+                                    oReplyBean = oCarritoService.update();
+                                    break;
                                 case "buy":
                                     oReplyBean = oCarritoService.buy();
                                     break;
@@ -285,7 +291,7 @@ public class ServiceFactory {
                                     break;
                             }
                             break;
-                       
+
                         case "usuario":
                             UsuarioService oUsuarioService = new UsuarioService(oRequest);
                             switch (op) {
@@ -334,7 +340,7 @@ public class ServiceFactory {
                             break;
                         case "linea":
                             LineaService oLineaService = new LineaService(oRequest);
-                            String pene ="pene caca culo pedo pis-"+oRequest.getParameter("id");
+                            String pene = "pene caca culo pedo pis-" + oRequest.getParameter("id");
                             switch (op) {
                                 case "get":
                                     oReplyBean = oLineaService.get();

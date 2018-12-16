@@ -8,22 +8,24 @@ moduloDirectivas.component('headerComponent', {
 
 function js(toolService, sessionService, $http, $route) {
     var self = this;
-
+    if (sessionService.getCountCarrito() > 0) {
+        self.carrito = true;
+    }
     self.ocultar = sessionService.isSessionActive();
     self.usuariologeado = sessionService.getUserName();
     self.idUsuariologeado = sessionService.getUserId();
     self.isActive = toolService.isActive;
     self.idTipoUsuario = sessionService.getTipoUserId();
-    if (sessionService.getTipoUserId() == 1) {
+    if (sessionService.getTipoUserId() === 1) {
         self.isAdmin = sessionService.getTipoUserId();
     } else {
         self.isUser = sessionService.getTipoUserId();
     }
-    // self.carrito = sessionService.getCountCarrito();
-    /*
-     sessionService.registerObserverCallback( function (){
-     self.carrito = sessionService.getCountCarrito();
-     })*/
+    self.carrito = sessionService.getCountCarrito();
+
+    sessionService.registerObserverCallback(function () {
+        self.carrito = sessionService.getCountCarrito();
+    });
 
     self.logout = function () {
         $http({

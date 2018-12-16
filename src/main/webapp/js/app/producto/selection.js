@@ -1,6 +1,6 @@
 'use strict';
-moduleComponent.component('usuarioSelection', {
-    templateUrl: 'js/app/usuario/selection.html',
+moduleComponent.component('productoSelection', {
+    templateUrl: 'js/app/producto/selection.html',
     controllerAs: 'c',
     controller: cController,
     bindings: {
@@ -53,8 +53,8 @@ function cController($http) {
 
 
 
-    self.save = function (id, nombre) {
-        self.obj={id:id,nombre:nombre};
+    self.save = function (id, desc) {
+        self.obj={id:id,nombre:desc};
     };
 
 

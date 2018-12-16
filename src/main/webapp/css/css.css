@@ -11,19 +11,13 @@
     text-align: center;
     border: 0.5px solid black;   
     display: grid;
-    grid-template-rows: 250px auto auto; 
+    grid-template-rows: 230px auto auto; 
     border-radius: 15%;
 
 }
 
 .grid-item:hover {
     transform: scale(1.1);
-}
-
-
-.grid-contenido {
-    
-
 }
 
 #botones{

@@ -1,5 +1,5 @@
-trolleyes.run(['$rootScope', 'sessionService', '$location', '$http',
-    function ($rootScope, oSessionService, $location, $http) {
+trolleyes.run(['$rootScope', 'sessionService', '$location', '$http', 'countcarritoService',
+    function ($rootScope, oSessionService, $location, $http, countcarritoService) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var nextUrl = next.$$route.originalPath;
             $http({
@@ -24,6 +24,6 @@ trolleyes.run(['$rootScope', 'sessionService', '$location', '$http',
                 }
 
             });
-
-        })
+            countcarritoService.updateCarrito();
+        });
     }]);
