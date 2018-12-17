@@ -9,6 +9,8 @@ moduloDirectivas.component('headerComponent', {
 function js(toolService, sessionService, $http, $route,$location) {
     var self = this;
     if (sessionService.getCountCarrito() > 0) {
+        self.carrito = false;
+    }else{
         self.carrito = true;
     }
     self.ocultar = sessionService.isSessionActive();

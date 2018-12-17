@@ -4,8 +4,8 @@ moduleService.service('sessionService', ['$location', function ($location) {
         var userName = "";
         var userId='';
         var tipoUserId= '';
-         var carrito = 0;
-         var observerCallbacks = [];
+        var carrito = 0;
+        var observerCallbacks = [];
         return {
             getUserName: function () {
                 return userName;
@@ -48,6 +48,7 @@ moduleService.service('sessionService', ['$location', function ($location) {
             registerObserverCallback: function (callback) {
                 observerCallbacks.push(callback);
             }
+            
         };
-        console.log('Usuario-'+userName+' idUsuario'+userId+'  IdTipoUsua'+tipoUserId + '  Carrito'+carrito);
+        
     }]);

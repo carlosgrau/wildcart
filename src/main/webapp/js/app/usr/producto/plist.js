@@ -1,11 +1,10 @@
 'use strict'
 
-moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
-    function ($scope, $http, $location, toolService, $routeParams, sessionService) {
-        
+moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService','countcarritoService',
+    function ($scope, $http, $location, toolService, $routeParams, sessionService,countcarritoService) {
 
         $scope.totalPages = 1;
-        if(sessionService.getTipoUserId() === 1){
+        if (sessionService.getTipoUserId() === 1) {
             $scope.isAdmin = true;
         }
 
@@ -58,7 +57,7 @@ moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$lo
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
             $scope.comprar = true;
-             if (($scope.ajaxDataUsuarios.existencias === 0) || ($scope.ajaxDataUsuarios.existencias === null)){
+            if (($scope.ajaxDataUsuarios.existencias === 0) || ($scope.ajaxDataUsuarios.existencias === null)) {
                 $scope.comprar = false;
             }
         }, function (response) {
@@ -69,7 +68,7 @@ moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$lo
         $scope.actulizar = function () {
             $location.url(`usr/producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
-       //paginacion neighbourhood
+        //paginacion neighbourhood
         function pagination2() {
             $scope.list2 = [];
             $scope.neighborhood = 1;
@@ -90,9 +89,23 @@ moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$lo
                     }
                 }
             }
+        }
+        ;
+        $scope.addProducto = function (id) {
+
+            $http({
+                method: 'GET',
+                url: '/json?ob=carrito&op=add&prod=' + id + '&cant=1'
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message;
+                countcarritoService.updateCarrito();
+            }, function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message || 'Request failed';
+            });
         };
-
-
+        
         $scope.isActive = toolService.isActive;
 
 

@@ -1,9 +1,9 @@
 'use strict'
 
-moduleCommon.controller('carritoController', ['$scope', '$location', 'toolService', 'sessionService', '$http',
-    function ($scope, $location, toolService, sessionService, $http) {
+moduleCommon.controller('carritoController', ['$scope', '$location', 'toolService', 'sessionService', '$http', 'countcarritoService',
+    function ($scope, $location, toolService, sessionService, $http, countcarritoService) {
         $scope.idusuario = sessionService.getUserId();
-       
+
         //-----------------------------------------------------OBLIGATORIO DE MOMENTO------------------------------------------
         $http({
             method: 'GET',
@@ -41,7 +41,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 $scope.ajaxCarrito = response.data.message;
                 $scope.cantidadTotal = 0;
                 $scope.precioTotalProd = 0.0;
-
+                countcarritoService.updateCarrito();
                 for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
                     $scope.cantidadTotal += response.data.message[i].cantidad;
                     $scope.precioTotalProd += (response.data.message[i].obj_producto.precio * response.data.message[i].cantidad);
@@ -65,6 +65,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message;
+                countcarritoService.updateCarrito();
                 $scope.carrito = true;
                 $scope.cantidadTotal = 0;
                 $scope.precioTotalProd = 0.0;
@@ -81,17 +82,18 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 $scope.ajaxCarrito = response.data.message || 'Request failed';
             });
         };
-        $scope.restarProducto = function (id,cantidad) {
-            if(cantidad<= 0){
+        $scope.restarProducto = function (id, cantidad) {
+            if (cantidad <= 0) {
                 cantidad = 0;
                 $scope.deleteProducto(id);
             }
             $http({
                 method: 'GET',
-                url: '/json?ob=carrito&op=update&prod=' + id + '&cant='+cantidad
+                url: '/json?ob=carrito&op=update&prod=' + id + '&cant=' + cantidad
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message;
+                countcarritoService.updateCarrito();
                 $scope.carrito = true;
                 $scope.cantidadTotal = 0;
                 $scope.precioTotalProd = 0.0;
@@ -116,6 +118,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarritoComprado = response.data.message;
+                countcarritoService.updateCarrito();
                 $scope.carritoVacio = true;
                 $scope.carritoComprado = true;
             }, function (response) {
@@ -128,6 +131,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                     }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message;
+                countcarritoService.updateCarrito();
                 $scope.carrito = true;
                 $scope.cantidadTotal = 0;
                 $scope.precioTotalProd = 0.0;
@@ -155,6 +159,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message;
+                countcarritoService.updateCarrito();
                 $scope.carritoVacio = true;
                 $scope.carritoComprado = false;
             }, function (response) {

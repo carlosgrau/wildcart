@@ -12,6 +12,7 @@ import com.google.gson.annotations.Expose;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.specificDaoImplementation.FacturaDao;
+import net.daw.bean.beanImplementation.UsuarioBean;
 
 import net.daw.helper.EncodingHelper;
 import net.daw.dao.specificDaoImplementation.TipousuarioDao;
@@ -115,6 +116,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
 
     @Override
     public UsuarioBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+        UsuarioBean oUsuarioBean = null;
         this.setId(oResultSet.getInt("id"));
         this.setDni(oResultSet.getString("dni"));
         this.setNombre(oResultSet.getString("nombre"));

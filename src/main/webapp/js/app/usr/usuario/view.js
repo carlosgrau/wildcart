@@ -35,5 +35,5 @@ moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolServi
             $scope.ocultar = true;
         }
         $scope.isActive = toolService.isActive;
-
+        
     }]);

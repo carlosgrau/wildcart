@@ -34,21 +34,22 @@ var autenticacionAdministrador = function ($q, $location, $http, sessionService,
 
     return deferred.promise;
 };
-var autenticacionUsuario = function ($q, $location, $http, sessionService, countcarritoService) {
+var autenticacionUsuario = function ($q, $location, $http, sessionService, countcarritoService, $routeParams) {
     var deferred = $q.defer();
     var usuario;
     var nombreUsuario;
     var idUsuarioLogeado;
+    var id = $routeParams.id;
     $http({
         method: 'GET',
         url: 'json?ob=usuario&op=check'
     }).then(function (response) {
         if (response.data.status === 200) {
             //comprobar que el usuario en sesión es usuario
+            
             usuario = response.data.message.obj_tipoUsuario.id;
             nombreUsuario = response.data.message.nombre + ' ' + response.data.message.ape1;
             idUsuarioLogeado = response.data.message.id;
-            console.log(usuario);
             if (usuario === 2) {
                 countcarritoService.updateCarrito();
                 //hay que meter el usuario activo en el sessionService
@@ -56,7 +57,13 @@ var autenticacionUsuario = function ($q, $location, $http, sessionService, count
                 sessionService.setUserId(idUsuarioLogeado);
                 sessionService.setUserName(nombreUsuario);
                 sessionService.setSessionActive();
-                deferred.resolve();
+                if (id === null || id === undefined || id === "") {
+                    deferred.resolve();
+                } else {
+                    if(id=== idUsuarioLogeado){
+                        deferred.resolve();
+                    }
+                }
             } else {
                 $location.path('/home');
             }
