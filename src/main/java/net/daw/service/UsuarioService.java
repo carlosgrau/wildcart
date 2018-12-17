@@ -109,4 +109,30 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
         }
         return oReplyBean;
     }
+    public ReplyBean changepassword() throws Exception {
+       Gson oGson = new Gson();
+       int iRes = 0;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        UsuarioBean oUsuarioBeanSession;
+        oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
+        String pass = oRequest.getParameter("pass");
+        int id = Integer.parseInt(oRequest.getParameter("id"));
+        ReplyBean oReplyBean = null;
+        if (oUsuarioBeanSession != null) {
+            try {
+                oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+                oConnection = oConnectionPool.newConnection();
+                UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, "usuario");
+                iRes = oUsuarioDao.updatePass(id,pass, oUsuarioBeanSession);
+                oReplyBean = new ReplyBean(200, Integer.toString(iRes));
+            } catch (Exception e) {
+                throw new Exception(e);
+            } finally {
+                oConnectionPool.disposeConnection();
+            }
+        }
+        return oReplyBean;
+    }
+     
 }
