@@ -1,6 +1,6 @@
 'use strict'
 
-moduleProducto.controller('productoPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
+moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, $location, toolService, $routeParams, sessionService) {
         
 
@@ -32,21 +32,6 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
                 $scope.page = 1;
             }
         }
-        $scope.resetOrder = function () {
-            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page);
-        }
-
-
-        $scope.ordena = function (order, align) {
-            if ($scope.orderURLServidor == "") {
-                $scope.orderURLServidor = "&order=" + order + "," + align;
-                $scope.orderURLCliente = order + "," + align;
-            } else {
-                $scope.orderURLServidor = $scope.orderURLServidor + "-" + order + "," + align;
-                $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
-            }
-            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
-        }
 
         //getcount
         $http({
@@ -58,7 +43,7 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
             $scope.totalPages = Math.ceil($scope.ajaxDataUsuariosNumber / $scope.rpp);
             if ($scope.page > $scope.totalPages) {
                 $scope.page = $scope.totalPages;
-                $scope.update();
+                $scope.actulizar();
             }
             pagination2();
         }, function (response) {
@@ -81,27 +66,10 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
 
-        $scope.update = function () {
-            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+        $scope.actulizar = function () {
+            $location.url(`usr/producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
-        $scope.addProducto = function (id) {
-
-            $http({
-                method: 'GET',
-                url: '/json?ob=carrito&op=add&prod=' + id + '&cant=1'
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.ajaxCarrito = response.data.message;
-
-            }, function (response) {
-                $scope.status = response.status;
-                $scope.ajaxCarrito = response.data.message || 'Request failed';
-            });
-        };
-
-
-
-        //paginacion neighbourhood
+       //paginacion neighbourhood
         function pagination2() {
             $scope.list2 = [];
             $scope.neighborhood = 1;

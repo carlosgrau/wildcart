@@ -123,7 +123,7 @@ trolleyes.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/usr/usuario/view/:id?', {templateUrl: 'js/app/usr/usuario/view.html', controller: 'usuarioViewController', resolve: {auth: autenticacionUsuario}});
         $routeProvider.when('/usr/factura/plistlinea/:id?/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/factura/plistlinea.html', controller: 'facturaViewController', resolve: {auth: autenticacionUsuario}});
         $routeProvider.when('/usr/producto/view/:id?', {templateUrl: 'js/app/usr/producto/view.html', controller: 'productoViewController', resolve: {auth: autenticacionUsuario}});
-        $routeProvider.when('/usr/producto/plist/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/producto/plist.html', controller: 'productoPlistController', resolve: {auth: autenticacionUsuario}});
+        $routeProvider.when('/usr/producto/plist/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/producto/plist.html', controller: 'productoPlistUsrController', resolve: {auth: autenticacionUsuario}});
         $routeProvider.when('/usr/usuario/plistfactura/:id?/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/usuario/plistfactura.html', controller: 'usuarioPlistFacturaController', resolve: {auth: autenticacionUsuario}});
 
 
