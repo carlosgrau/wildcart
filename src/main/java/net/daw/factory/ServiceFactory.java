@@ -291,7 +291,17 @@ public class ServiceFactory {
                                     break;
                             }
                             break;
-
+                        case "tipousuario":
+                            TipousuarioService oTipousuarioService = new TipousuarioService(oRequest);
+                            switch (op) {
+                                case "get":
+                                    oReplyBean = oTipousuarioService.get();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         case "usuario":
                             UsuarioService oUsuarioService = new UsuarioService(oRequest);
                             switch (op) {

@@ -1,0 +1,116 @@
+<header-component></header-component>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+    <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Productos</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group" style="width:400px;">
+                <p class="mt-2" style="width:200px;">Selecciona RPP: </p>
+                <select class="form-control" ng-change="update()" ng-model="rpp">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <nav aria-label="paginacion">
+                <ul class="pagination">
+
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 1" href="producto/plist/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 2" href="producto/plist/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                    </li>
+                    <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
+                        <a class="page-link" href="producto/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="producto/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages" href="producto/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        <div class="col-3">
+            <p>Resetear ordenado<button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
+                    <i class="fa fa-power-off"></i>
+                </button>
+            </p>
+        </div>
+        <div class="col-3">
+            <a href="/producto/new">
+                <p  ng-show="isAdmin">Añadir Producto</p>
+            </a>
+        </div>
+
+    </div>
+  
+    <div class="grid-container">
+        <div class="grid-item" ng-repeat="fila in ajaxDataUsuarios track by $index">
+
+            <a href="producto/view/{{fila.id}}">
+                <div class="grid-contenido">
+                    <img ng-src="imagenes/{{fila.foto}}" style="width: 250px; height: 250px; margin-top: 20px">
+
+                </div>
+                
+            </a>
+            <div class="grid-contenido" style="margin-top: 15%; font-size: 25px">
+                <strong> {{(fila.desc).toUpperCase()}} </strong>
+            </div>
+
+            <div class="grid-contenido ">
+                <h1>
+                    <i> {{(fila.precio).toFixed(2)}} € </i>
+                </h1>
+            </div>
+            <div class="grid-contenido">
+
+                <a ng-show="isAdmin" href="producto/edit/{{fila.id}}" id="botones"><i class="fas fa-edit" style="font-size: 40px;"></i></a>
+                <a  ng-show="isAdmin"  href="producto/remove/{{fila.id}}" id="botones"> <i class="fas fa-times" style="font-size: 40px;"></i></a>
+
+            </div>
+            <div class="grid-contenido" ng-show="{{fila.existencias}}>0">
+                <button class="btn btn-info" style="border-radius: 7%; font-family: sans-serif" ng-click="addProducto(fila.id)">
+                    <a>AÑADIR A LA CESTA
+                        <i class="fas fa-cart-plus" style="font-size: 40px;" >
+                        </i>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <nav aria-label="paginacion">
+                <ul class="pagination">
+
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 1" href="producto/plist/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 2" href="producto/plist/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                    </li>
+                    <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
+                        <a class="page-link" href="producto/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="producto/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages" href="producto/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</main>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

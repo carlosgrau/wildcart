@@ -34,9 +34,9 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
     private String login;
     @Expose(serialize = false)
     private String pass;
-    @Expose(serialize = false)
+    @Expose
     private int id_tipoUsuario;
-    @Expose(deserialize = false)
+    @Expose
     private TipousuarioBean obj_tipoUsuario;
     @Expose(deserialize = false)
     private int link_factura;

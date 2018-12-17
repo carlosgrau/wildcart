@@ -21,7 +21,6 @@ moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService', 
                         sessionService.setSessionActive();
                         sessionService.setUserName(response.data.message.nombre + ' ' + response.data.message.ape1);
                         sessionService.setUserId(response.data.message.id);
-                        sessionService.setCountCarrito(0);
                         $scope.idUsuariologeado= sessionService.getUserId();
                         $scope.usuariologeado = sessionService.getUserName();
                         sessionService.setTipoUserId(response.data.message.obj_tipoUsuario.id);

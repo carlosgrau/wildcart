@@ -27,3 +27,4 @@ trolleyes.run(['$rootScope', 'sessionService', '$location', '$http', 'countcarri
             countcarritoService.updateCarrito();
         });
     }]);
+    

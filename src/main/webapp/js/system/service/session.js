@@ -49,5 +49,5 @@ moduleService.service('sessionService', ['$location', function ($location) {
                 observerCallbacks.push(callback);
             }
         };
-
+        console.log('Usuario-'+userName+' idUsuario'+userId+'  IdTipoUsua'+tipoUserId + '  Carrito'+carrito);
     }]);

@@ -6,7 +6,7 @@ moduloDirectivas.component('headerComponent', {
     controller: js
 });
 
-function js(toolService, sessionService, $http, $route) {
+function js(toolService, sessionService, $http, $route,$location) {
     var self = this;
     if (sessionService.getCountCarrito() > 0) {
         self.carrito = true;
@@ -38,6 +38,7 @@ function js(toolService, sessionService, $http, $route) {
                 sessionService.setSessionInactive();
                 sessionService.setUserName("");
                 $route.reload();
+                $location.path('/home');
             }
         });
     };

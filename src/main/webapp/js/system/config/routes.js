@@ -1,15 +1,25 @@
-var autenticacionAdministrador = function ($q, $location, $http, sessionService) {
+var autenticacionAdministrador = function ($q, $location, $http, sessionService, countcarritoService) {
     var deferred = $q.defer();
+    var usuario;
+    var nombreUsuario;
+    var idUsuarioLogeado;
     $http({
         method: 'GET',
         url: 'json?ob=usuario&op=check'
     }).then(function (response) {
+        respuesta = response;
         if (response.data.status === 200) {
             //comprobar que el usuario en sesión es administrador
-            var usuario = sessionService.getTipoUserId();
-            console.log(usuario);
+            usuario = response.data.message.obj_tipoUsuario.id;
+            nombreUsuario = response.data.message.nombre + ' ' + response.data.message.ape1;
+            idUsuarioLogeado = response.data.message.id;
             if (usuario === 1) {
+                countcarritoService.updateCarrito();
                 //hay que meter el usuario activo en el sessionService
+                sessionService.setTipoUserId(usuario);
+                sessionService.setUserId(idUsuarioLogeado);
+                sessionService.setUserName(nombreUsuario);
+                sessionService.setSessionActive();
                 deferred.resolve();
             } else {
                 $location.path('/home');
@@ -19,21 +29,33 @@ var autenticacionAdministrador = function ($q, $location, $http, sessionService)
         }
     }, function (response) {
         $location.path('/home');
+        respuesta = response;
     });
+
     return deferred.promise;
 };
-var autenticacionUsuario = function ($q, $location, $http, sessionService) {
+var autenticacionUsuario = function ($q, $location, $http, sessionService, countcarritoService) {
     var deferred = $q.defer();
+    var usuario;
+    var nombreUsuario;
+    var idUsuarioLogeado;
     $http({
         method: 'GET',
         url: 'json?ob=usuario&op=check'
     }).then(function (response) {
         if (response.data.status === 200) {
             //comprobar que el usuario en sesión es usuario
-           var usuario = sessionService.getTipoUserId();
+            usuario = response.data.message.obj_tipoUsuario.id;
+            nombreUsuario = response.data.message.nombre + ' ' + response.data.message.ape1;
+            idUsuarioLogeado = response.data.message.id;
             console.log(usuario);
             if (usuario === 2) {
+                countcarritoService.updateCarrito();
                 //hay que meter el usuario activo en el sessionService
+                sessionService.setTipoUserId(usuario);
+                sessionService.setUserId(idUsuarioLogeado);
+                sessionService.setUserName(nombreUsuario);
+                sessionService.setSessionActive();
                 deferred.resolve();
             } else {
                 $location.path('/home');
@@ -51,7 +73,7 @@ var autenticacionUsuario = function ($q, $location, $http, sessionService) {
 
 
 trolleyes.config(['$routeProvider', function ($routeProvider) {
-       //ADMINISTRADOR
+        //ADMINISTRADOR
         //USUARIO
         $routeProvider.when('/usuario/plist/:rpp?/:page?/:order?', {templateUrl: 'js/app/usuario/plist.html', controller: 'usuarioPlistController', resolve: {auth: autenticacionAdministrador}});
         $routeProvider.when('/usuario/plist', {templateUrl: 'js/app/usuario/plist.html', controller: 'usuarioPlistController', resolve: {auth: autenticacionAdministrador}});
@@ -96,6 +118,15 @@ trolleyes.config(['$routeProvider', function ($routeProvider) {
         //LINEA
         $routeProvider.when('/linea/edit/:id?', {templateUrl: 'js/app/linea/edit.html', controller: 'lineaEditController', resolve: {auth: autenticacionAdministrador}});
         $routeProvider.when('/linea/lineafactura/:id?', {templateUrl: 'js/app/linea/lineafactura.html', controller: 'lineaNewController', resolve: {auth: autenticacionAdministrador}});
+
+        //USUARIOS
+        $routeProvider.when('/usr/usuario/view/:id?', {templateUrl: 'js/app/usr/usuario/view.html', controller: 'usuarioViewController', resolve: {auth: autenticacionUsuario}});
+        $routeProvider.when('/usr/factura/plistlinea/:id?/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/factura/plistlinea.html', controller: 'facturaViewController', resolve: {auth: autenticacionUsuario}});
+        $routeProvider.when('/usr/producto/view/:id?', {templateUrl: 'js/app/usr/producto/view.html', controller: 'productoViewController', resolve: {auth: autenticacionUsuario}});
+        $routeProvider.when('/usr/producto/plist/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/producto/plist.html', controller: 'productoPlistController', resolve: {auth: autenticacionUsuario}});
+        $routeProvider.when('/usr/usuario/plistfactura/:id?/:rpp?/:page?/:order?', {templateUrl: 'js/app/usr/usuario/plistfactura.html', controller: 'usuarioPlistFacturaController', resolve: {auth: autenticacionUsuario}});
+
+
         //LOGIN
         $routeProvider.when('/login', {templateUrl: 'js/app/login.html', controller: 'loginController'});
 
