@@ -80,8 +80,11 @@
         </div>
     </div>    
     <div ng-show="carritoComprado" class="row justify-content-md-center">        
-        <div class="alert alert-primary col-5" style="text-align: center">
-            {{ajaxCarritoComprado.toUpperCase()}}<a href="usuario/plistfactura/{{idusuario}}" class="badge badge-success"> VER TUS FACTURAS </a>
+        <div class="alert alert-primary col-5" style="text-align: center" ng-show="isAdmin">
+            FACTURA Nº{{ajaxCarritoComprado}} CREADA. <a href="usuario/plistfactura/{{idusuario}}" class="badge badge-success"> VER TUS FACTURAS </a>
+        </div>
+        <div class="alert alert-primary col-5" style="text-align: center" ng-show="isUser">
+            FACTURA Nº{{ajaxCarritoComprado}} CREADA. <a href="usr/usuario/plistfactura/{{idusuario}}" class="badge badge-success"> VER TUS FACTURAS </a>
         </div>
     </div> 
 </main>

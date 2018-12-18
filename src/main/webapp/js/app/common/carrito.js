@@ -3,7 +3,14 @@
 moduleCommon.controller('carritoController', ['$scope', '$location', 'toolService', 'sessionService', '$http', 'countcarritoService',
     function ($scope, $location, toolService, sessionService, $http, countcarritoService) {
         $scope.idusuario = sessionService.getUserId();
-
+        $scope.isAdmin = false;
+        $scope.isUser = false;
+        
+        if(sessionService.getTipoUserId() === 1){
+            $scope.isAdmin = true;
+        }else{
+           $scope.isUser = true; 
+        }
         //-----------------------------------------------------OBLIGATORIO DE MOMENTO------------------------------------------
         $http({
             method: 'GET',
@@ -145,11 +152,11 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                         $scope.precioTotalProd += (response.data.message[i].obj_producto.precio * response.data.message[i].cantidad);
                     }
                 }
-
             }, function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message || 'Request failed';
             });
+            
         };
         $scope.emptyCart = function () {
 

@@ -28,12 +28,6 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
                 $scope.page = 1;
             }
         }
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
-
         $scope.resetOrder = function () {
             $location.url(`usuario/plistfactura/` + $scope.rpp + `/` + $scope.page);
         };
