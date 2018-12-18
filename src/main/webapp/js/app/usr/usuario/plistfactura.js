@@ -4,7 +4,6 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
     function ($scope, toolService, $http, sessionService, $routeParams, $location, $filter) {
         $scope.totalPages = 1;
         $scope.id = $routeParams.id;
-        var idUsurioLogeado = sessionService.getUserId();
 
         if (!$routeParams.order) {
             $scope.orderURLServidor = "";
@@ -28,11 +27,6 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
             } else {
                 $scope.page = 1;
             }
-        }
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
         }
 
         $scope.resetOrder = function () {

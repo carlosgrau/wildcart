@@ -46,7 +46,7 @@ var autenticacionUsuario = function ($q, $location, $http, sessionService, count
     }).then(function (response) {
         if (response.data.status === 200) {
             //comprobar que el usuario en sesión es usuario
-            
+
             usuario = response.data.message.obj_tipoUsuario.id;
             nombreUsuario = response.data.message.nombre + ' ' + response.data.message.ape1;
             idUsuarioLogeado = response.data.message.id;
@@ -57,16 +57,10 @@ var autenticacionUsuario = function ($q, $location, $http, sessionService, count
                 sessionService.setUserId(idUsuarioLogeado);
                 sessionService.setUserName(nombreUsuario);
                 sessionService.setSessionActive();
-                if (id === null || id === undefined || id === "") {
-                    deferred.resolve();
-                } else {
-                    if(id=== idUsuarioLogeado){
-                        deferred.resolve();
-                    }
-                }
-            } else {
-                $location.path('/home');
+                deferred.resolve();
+
             }
+
             //hay que meter el usuario activo en el sessionService
         } else {
             $location.path('/home');
