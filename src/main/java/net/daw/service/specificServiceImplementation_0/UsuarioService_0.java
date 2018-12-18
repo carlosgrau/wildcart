@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_0;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,7 +15,8 @@ import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.specificDaoImplementation.UsuarioDao;
+import net.daw.dao.specificDaoImplementation_0.UsuarioDao_0;
+import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
@@ -25,9 +26,9 @@ import net.daw.service.publicServiceInterface.ServiceInterface;
  *
  * @author Ramón
  */
-public class UsuarioService extends GenericServiceImplementation implements ServiceInterface {
+public class UsuarioService_0 extends GenericServiceImplementation implements ServiceInterface {
 
-    public UsuarioService(HttpServletRequest oRequest) {
+    public UsuarioService_0(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
     }
@@ -41,7 +42,7 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob,oRequest);
+            UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, ob, oUsuarioBeanSession);
             UsuarioBean oUsuarioBean = new UsuarioBean();
             for (int i = 1; i <= number; i++) {
                 oUsuarioBean.setDni("765934875A");
@@ -51,7 +52,7 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
                 oUsuarioBean.setLogin("ripego");
                 oUsuarioBean.setPass("hola");
                 oUsuarioBean.setId_tipoUsuario(2);
-                oUsuarioBean = (UsuarioBean) oUsuarioDao.create(oUsuarioBean,oRequest);
+                oUsuarioBean = (UsuarioBean) oUsuarioDao.create(oUsuarioBean);
             }
             oReplyBean = new ReplyBean(200, oGson.toJson(number));
         } catch (Exception ex) {
@@ -72,9 +73,9 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
 
         oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
         oConnection = oConnectionPool.newConnection();
-        UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob,oRequest);
+        UsuarioDao_0 oUsuarioDao = new UsuarioDao_0(oConnection, ob, oUsuarioBeanSession);
 
-        UsuarioBean oUsuarioBean = oUsuarioDao.login(strLogin, strPassword,oRequest);
+        UsuarioBean oUsuarioBean = oUsuarioDao.login(strLogin, strPassword);
         if (oUsuarioBean != null) {
             if (oUsuarioBean.getId() > 0) {
                 oRequest.getSession().setAttribute("user", oUsuarioBean);
@@ -99,6 +100,7 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
 
     public ReplyBean check() throws Exception {
         ReplyBean oReplyBean;
+        //Aquí  no haría falta el usuarioBean de session, ya lo cogemos del generic, pero lo dejo por ahora:
         UsuarioBean oUsuarioBean;
         oUsuarioBean = (UsuarioBean) oRequest.getSession().getAttribute("user");
         if (oUsuarioBean != null) {
@@ -109,30 +111,4 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
         }
         return oReplyBean;
     }
-    public ReplyBean changepassword() throws Exception {
-       Gson oGson = new Gson();
-       int iRes = 0;
-        ConnectionInterface oConnectionPool = null;
-        Connection oConnection;
-        UsuarioBean oUsuarioBeanSession;
-        oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
-        String pass = oRequest.getParameter("pass");
-        int id = Integer.parseInt(oRequest.getParameter("id"));
-        ReplyBean oReplyBean = null;
-        if (oUsuarioBeanSession != null) {
-            try {
-                oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-                oConnection = oConnectionPool.newConnection();
-                UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, "usuario",oRequest);
-                iRes = oUsuarioDao.updatePass(id,pass, oUsuarioBeanSession);
-                oReplyBean = new ReplyBean(200, Integer.toString(iRes));
-            } catch (Exception e) {
-                throw new Exception(e);
-            } finally {
-                oConnectionPool.disposeConnection();
-            }
-        }
-        return oReplyBean;
-    }
-     
 }

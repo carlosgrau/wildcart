@@ -16,16 +16,16 @@ import net.daw.bean.publicBeanInterface.BeanInterface;
  */
 public interface DaoInterface {
 
-    public BeanInterface get(int id, Integer expand,HttpServletRequest oRequest) throws Exception;
+    public BeanInterface get(int id, Integer expand) throws Exception;
 
-    public int remove(int id,HttpServletRequest oRequest) throws Exception;
+    public int remove(int id) throws Exception;
 
-    public int getcount(HttpServletRequest oRequest) throws Exception;
+    public int getcount() throws Exception;
 
-    public BeanInterface create(BeanInterface oBean,HttpServletRequest oRequest) throws Exception;
+    public BeanInterface create(BeanInterface oBean) throws Exception;
 
-    public int update(BeanInterface oBean,HttpServletRequest oRequest) throws Exception;
+    public int update(BeanInterface oBean) throws Exception;
 
-    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand,HttpServletRequest oRequest) throws Exception;
+    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception;
 
 }

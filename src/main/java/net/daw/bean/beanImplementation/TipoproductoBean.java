@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 import com.google.gson.annotations.Expose;
-import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.helper.EncodingHelper;
@@ -22,12 +21,13 @@ public class TipoproductoBean extends GenericBeanImplementation implements BeanI
         this.desc = desc;
     }
     @Override
-    public TipoproductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws Exception {
+    public TipoproductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDesc(oResultSet.getString("desc"));
         return this;
     }
 
+   
     @Override
     public String getColumns() {
         String strColumns = "";
@@ -35,21 +35,22 @@ public class TipoproductoBean extends GenericBeanImplementation implements BeanI
         strColumns += "tipoproducto.desc";
         return strColumns;
     }
-
+    
     @Override
-    public String getValues() {
-        String strColumns = "";
+    public String getValues(){
+        String strColumns="";
         strColumns += "null,";
         strColumns += EncodingHelper.quotate(desc);
         return strColumns;
     }
-
+    
     @Override
-    public String getPairs() {
+    public String getPairs(){
         String strPairs = "";
-        strPairs += "id=" + id + ",";
+        strPairs += "id=" + id +",";
         strPairs += "tipoproducto.desc='" + desc + "'";
         strPairs += " WHERE id=" + id;
         return strPairs;
-    }
+}
+
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_1;
 
 import com.google.gson.Gson;
 import java.sql.Connection;
@@ -14,19 +14,23 @@ import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.specificDaoImplementation.FacturaDao;
+import net.daw.dao.publicDaoInterface.DaoInterface;
+import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
+import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
 import net.daw.factory.ConnectionFactory;
+import net.daw.factory.DaoFactory;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
 import net.daw.service.publicServiceInterface.ServiceInterface;
 
-public class FacturaService extends GenericServiceImplementation implements ServiceInterface {
+public class FacturaService_1 extends GenericServiceImplementation implements ServiceInterface {
 
-    public FacturaService(HttpServletRequest oRequest) {
+    public FacturaService_1(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
+        //oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
     }
 
-    public ReplyBean getbyidusuario() throws Exception {
+    public ReplyBean getcountXusuario() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
@@ -34,30 +38,10 @@ public class FacturaService extends GenericServiceImplementation implements Serv
             Integer id = Integer.parseInt(oRequest.getParameter("id"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob,oRequest);
-            ArrayList<FacturaBean> alFacturaBean = (ArrayList<FacturaBean>) oFacturaDao.get(id, 1,oRequest);
-            Gson oGson = new Gson();
-            oReplyBean = new ReplyBean(200, oGson.toJson(alFacturaBean));
-        } catch (Exception ex) {
-            throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
-        } finally {
-            oConnectionPool.disposeConnection();
-        }
+            //FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);               
+            FacturaDao_1 oDao = (FacturaDao_1) DaoFactory.getDao(oConnection, ob, oUsuarioBeanSession);
+            Integer registros = oDao.getcountXusuario(id);
 
-        return oReplyBean;
-
-    }
-
-    public ReplyBean getcountFacturaUser() throws Exception {
-        ReplyBean oReplyBean;
-        ConnectionInterface oConnectionPool = null;
-        Connection oConnection;
-        try {
-            Integer id = Integer.parseInt(oRequest.getParameter("id"));
-            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-            oConnection = oConnectionPool.newConnection();
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob,oRequest);
-            int registros = oFacturaDao.getcountFacturaUser(id);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(registros));
         } catch (Exception ex) {
@@ -73,18 +57,14 @@ public class FacturaService extends GenericServiceImplementation implements Serv
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
-        UsuarioBean oUsuarioBeanSession;
-
         try {
             Integer id_usuario = Integer.parseInt(oRequest.getParameter("id"));
             Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
-
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob,oRequest);
-            ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1, oUsuarioBeanSession,oRequest);
+            FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);
+            ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
         } catch (Exception ex) {

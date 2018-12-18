@@ -13,11 +13,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
-import net.daw.dao.specificDaoImplementation.LineaDao;
+import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
 import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -25,16 +24,17 @@ import net.daw.helper.EncodingHelper;
  *
  * @author a044531896d
  */
-public class FacturaBean extends GenericBeanImplementation implements BeanInterface {
-    @Expose
+public class FacturaBean extends GenericBeanImplementation implements BeanInterface{
+
+@Expose
     private Date fecha;
-    @Expose
+@Expose
     private double iva;
-    @Expose
+  @Expose(serialize = false)
     private int id_usuario;
-    @Expose
+@Expose(deserialize = false)
     private UsuarioBean obj_Usuario;
-    @Expose
+  @Expose
     private int link_linea;
 
     public UsuarioBean getObj_Usuario() {
@@ -76,21 +76,24 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
     public void setLink_linea(int link_linea) {
         this.link_linea = link_linea;
     }
-
-    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws SQLException, Exception {
+    
+ @Override
+   public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,UsuarioBean oUsuarioBeanSession) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
+        //Timestamp LUL = oResultSet.getTimestamp("fecha");
+        //this.setFecha(LUL);
         this.setFecha(oResultSet.getDate("fecha"));
         this.setIva(oResultSet.getDouble("iva"));
         if (expand > 0) {
-            DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario",oRequest);
-            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand,oRequest));
+            DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario", oUsuarioBeanSession);
+            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));
         }
-        LineaDao oLineaDao = new LineaDao(oConnection, "linea",oRequest);
+        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
         this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
-    }
-    
-    public String getPairs(String ob) {
+}
+   @Override
+    public String getPairs() {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
@@ -103,13 +106,13 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         strPairs += "id=" + id + ",";
         strPairs += "fecha=" + EncodingHelper.quotate(localDate.toString()) + ",";
         strPairs += "iva=" + iva + ",";
-        strPairs += "id_usuario=" + getObj_Usuario().getId();
+        strPairs += "id_usuario=" + id_usuario;
         strPairs += " WHERE id=" + id;
         return strPairs;
 
     }
-
-    @Override
+    
+ @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -118,23 +121,23 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         strColumns += "id_usuario";
         return strColumns;
     }
-
-    @Override
+    
+ @Override
     public String getValues() {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
-
+        
         Instant instant = fecha.toInstant();
-
+        
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
         System.out.println("Local Date is: " + localDate);
         String strColumns = "";
         strColumns += "null,";
         strColumns += EncodingHelper.quotate(localDate.toString()) + ",";
         strColumns += iva + ",";
-        if (getObj_Usuario() != null) {
-            strColumns += this.getObj_Usuario().getId();
-        } else {
+        if(getObj_Usuario() != null){
+        strColumns += this.getObj_Usuario().getId();
+        }else{
             strColumns += this.getId_usuario();
         }
         return strColumns;

@@ -8,11 +8,10 @@ package net.daw.bean.beanImplementation;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
-import net.daw.dao.specificDaoImplementation.TipoproductoDao;
+import net.daw.dao.specificDaoImplementation_1.TipoproductoDao_1;
 import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -22,6 +21,8 @@ import net.daw.helper.EncodingHelper;
  */
 public class ProductoBean extends GenericBeanImplementation implements BeanInterface {
 
+//    @Expose
+//    private int id;
     @Expose
     private String codigo;
     @Expose
@@ -32,9 +33,26 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
     private float precio;
     @Expose
     private String foto;
-    @Expose
-    private TipoproductoBean obj_TipoproductoBean;
+    @Expose(serialize = false)
+    private int id_tipoProducto;
+    @Expose(deserialize = false)
+    private TipoproductoBean obj_tipoProducto;
 
+    public TipoproductoBean getObj_tipoProducto() {
+        return obj_tipoProducto;
+    }
+
+    public void setObj_tipoProducto(TipoproductoBean obj_tipoProducto) {
+        this.obj_tipoProducto = obj_tipoProducto;
+    }
+
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
     public String getCodigo() {
         return codigo;
     }
@@ -75,26 +93,45 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         this.foto = foto;
     }
 
-    public TipoproductoBean getObj_TipoproductoBean() {
-        return obj_TipoproductoBean;
+    public int getId_tipoProducto() {
+        return id_tipoProducto;
     }
 
-    public void setObj_TipoproductoBean(TipoproductoBean obj_TipoproductoBean) {
-        this.obj_TipoproductoBean = obj_TipoproductoBean;
+    public void setId_tipoProducto(int id_tipoProducto) {
+        this.id_tipoProducto = id_tipoProducto;
     }
+
     @Override
-    public ProductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws Exception {
+    public ProductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws Exception {
+
         this.setId(oResultSet.getInt("id"));
         this.setCodigo(oResultSet.getString("codigo"));
         this.setDesc(oResultSet.getString("desc"));
         this.setExistencias(oResultSet.getInt("existencias"));
         this.setPrecio(oResultSet.getFloat("precio"));
         this.setFoto(oResultSet.getString("foto"));
+        this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         if (expand > 0) {
-            DaoInterface oTipoproductoDao = DaoFactory.getDao(oConnection, "tipoproducto",oRequest);
-            this.setObj_TipoproductoBean((TipoproductoBean) oTipoproductoDao.get(oResultSet.getInt("id_tipoProducto"), expand - 1,oRequest));
+            TipoproductoDao_1 otipoproductoDao = new TipoproductoDao_1(oConnection, "tipoproducto", oUsuarioBeanSession);
+            this.setObj_tipoProducto((TipoproductoBean) otipoproductoDao.get(oResultSet.getInt("id_tipoproducto"), expand - 1));
+        } else {
+            this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         }
         return this;
+    }
+
+    @Override
+    public String getPairs() {
+        String strPairs = "";
+
+        strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
+        strPairs += "producto.desc=" + EncodingHelper.quotate(desc) + ",";
+        strPairs += "existencias=" + existencias + ",";
+        strPairs += "precio=" + precio + ",";
+        strPairs += "foto=" + EncodingHelper.quotate(foto) + ",";
+        strPairs += "id_tipoproducto=" + id_tipoProducto;
+        strPairs += " WHERE id=" + id;
+        return strPairs;
 
     }
 
@@ -107,34 +144,21 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         strColumns += "existencias,";
         strColumns += "precio,";
         strColumns += "foto,";
-        strColumns += "id_tipoProducto";
+        strColumns += "id_tipoproducto";
         return strColumns;
     }
 
     @Override
     public String getValues() {
+
         String strColumns = "";
         strColumns += "null,";
         strColumns += EncodingHelper.quotate(codigo) + ",";
         strColumns += EncodingHelper.quotate(desc) + ",";
-        strColumns += existencias + ",";
-        strColumns += precio + ",";
+        strColumns += this.getExistencias() + ",";
+        strColumns += this.getPrecio() + ",";
         strColumns += EncodingHelper.quotate(foto) + ",";
-        strColumns += obj_TipoproductoBean.getId();
+        strColumns += this.getId_tipoProducto();
         return strColumns;
-    }
-
-    @Override
-    public String getPairs() {
-        String strPairs = "";
-        strPairs += "id=" + id + ",";
-        strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
-        strPairs += "producto.desc=" + EncodingHelper.quotate(desc) + ",";
-        strPairs += "existencias=" + existencias + ",";
-        strPairs += "precio=" + precio + ",";
-        strPairs += "foto=" + EncodingHelper.quotate(foto) + ",";
-        strPairs += "id_tipoProducto=" + obj_TipoproductoBean.getId();
-        strPairs += " WHERE id=" + id;
-        return strPairs;
     }
 }

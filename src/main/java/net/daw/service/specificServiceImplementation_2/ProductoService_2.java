@@ -1,5 +1,6 @@
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_2;
 
+import net.daw.service.specificServiceImplementation_1.*;
 import com.google.gson.Gson;
 import java.io.File;
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.ProductoBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.specificDaoImplementation.ProductoDao;
+import net.daw.dao.specificDaoImplementation_1.ProductoDao_1;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
@@ -20,12 +21,12 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-public class ProductoService extends GenericServiceImplementation implements ServiceInterface {
+public class ProductoService_2 extends GenericServiceImplementation implements ServiceInterface {
 
     HttpServletRequest oRequest;
     String ob = null;
 
-    public ProductoService(HttpServletRequest oRequest) {
+    public ProductoService_2(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
     }
@@ -35,15 +36,15 @@ public class ProductoService extends GenericServiceImplementation implements Ser
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
         ArrayList<ProductoBean> productos = new ArrayList<>();
-        RellenarService oRellenarService = new RellenarService();
+        RellenarService_1 oRellenarService = new RellenarService_1();
         try {
             Integer number = Integer.parseInt(oRequest.getParameter("number"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            ProductoDao oProductoDao = new ProductoDao(oConnection, ob,oRequest);
+            ProductoDao_1 oProductoDao = new ProductoDao_1(oConnection, ob, oUsuarioBeanSession);
             productos = oRellenarService.RellenarProducto(number);
             for (ProductoBean producto : productos) {
-                oProductoDao.create(producto,oRequest);
+                oProductoDao.create(producto);
             }
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson("Productos creados: " + number));

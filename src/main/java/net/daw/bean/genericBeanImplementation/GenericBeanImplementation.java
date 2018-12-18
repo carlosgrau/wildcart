@@ -8,7 +8,7 @@ package net.daw.bean.genericBeanImplementation;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 
 public class GenericBeanImplementation implements BeanInterface {
@@ -16,16 +16,18 @@ public class GenericBeanImplementation implements BeanInterface {
     @Expose
     protected int id;
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
     @Override
-    public BeanInterface fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws Exception {
+    public BeanInterface fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
