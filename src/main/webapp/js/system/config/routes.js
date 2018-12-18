@@ -58,9 +58,7 @@ var autenticacionUsuario = function ($q, $location, $http, sessionService, count
                 sessionService.setUserName(nombreUsuario);
                 sessionService.setSessionActive();
                 deferred.resolve();
-
             }
-
             //hay que meter el usuario activo en el sessionService
         } else {
             $location.path('/home');

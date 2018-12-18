@@ -2,6 +2,7 @@ package net.daw.bean.publicBeanInterface;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import javax.servlet.http.HttpServletRequest;
 
 public interface BeanInterface {
 
@@ -9,7 +10,7 @@ public interface BeanInterface {
 
     public void setId(int id);
 
-    public BeanInterface fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception;
+    public BeanInterface fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws Exception;
 
     public String getColumns();
 

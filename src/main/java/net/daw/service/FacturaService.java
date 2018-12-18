@@ -34,8 +34,8 @@ public class FacturaService extends GenericServiceImplementation implements Serv
             Integer id = Integer.parseInt(oRequest.getParameter("id"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
-            ArrayList<FacturaBean> alFacturaBean = (ArrayList<FacturaBean>) oFacturaDao.get(id, 1);
+            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob,oRequest);
+            ArrayList<FacturaBean> alFacturaBean = (ArrayList<FacturaBean>) oFacturaDao.get(id, 1,oRequest);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alFacturaBean));
         } catch (Exception ex) {
@@ -56,7 +56,7 @@ public class FacturaService extends GenericServiceImplementation implements Serv
             Integer id = Integer.parseInt(oRequest.getParameter("id"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
+            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob,oRequest);
             int registros = oFacturaDao.getcountFacturaUser(id);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(registros));
@@ -83,8 +83,8 @@ public class FacturaService extends GenericServiceImplementation implements Serv
             oConnection = oConnectionPool.newConnection();
             oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
 
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
-            ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1, oUsuarioBeanSession);
+            FacturaDao oFacturaDao = new FacturaDao(oConnection, ob,oRequest);
+            ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1, oUsuarioBeanSession,oRequest);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
         } catch (Exception ex) {

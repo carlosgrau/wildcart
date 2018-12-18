@@ -66,8 +66,8 @@ public class CarritoService {
             Integer cant = Integer.parseInt(oRequest.getParameter("cant"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
-            ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 2);
+            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto",oRequest);
+            ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 2,oRequest);
             Integer existencias = oProductoBean.getExistencias();
 
             //Para saber si tenemos agregado el producto al carrito de compras
@@ -133,8 +133,8 @@ public class CarritoService {
             Integer cant = Integer.parseInt(oRequest.getParameter("cant"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
-            ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 2);
+            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto",oRequest);
+            ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 2,oRequest);
 
             Integer existencias = oProductoBean.getExistencias();
 
@@ -259,15 +259,15 @@ public class CarritoService {
             oFacturaBean.setIva(21.0);
 
             //ya tenemos el bean relleno, solo falta crear la factura
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
+            FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura",oRequest);
 
-            FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean);
+            FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean,oRequest);
             int id_factura = oFacturaBeanCreada.getId();
             //YA TENEMOS CREADA LA FACTURA Y FATA HACER BUCLE PARA CREAR LINEAS
             LineaDao oLineaDao;
             LineaBean oLineaBean;
-            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
-            oLineaDao = new LineaDao(oConnection, "linea");
+            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto",oRequest);
+            oLineaDao = new LineaDao(oConnection, "linea",oRequest);
             ProductoBean oProductoBean;
 
             for (ItemBean ib : cart) {
@@ -281,7 +281,7 @@ public class CarritoService {
                 oLineaBean.setId_producto(ib.getObj_producto().getId());
                 oLineaBean.setCantidad(cant);
 
-                oLineaDao.create(oLineaBean);
+                oLineaDao.create(oLineaBean,oRequest);
 
                 //RESTAMOS EXISTENCIAS DE LA BBDD
                 oProductoBean = new ProductoBean();
@@ -292,7 +292,7 @@ public class CarritoService {
 
                 oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
 
-                oProductoDao.update(oProductoBean);
+                oProductoDao.update(oProductoBean,oRequest);
 
             }
 

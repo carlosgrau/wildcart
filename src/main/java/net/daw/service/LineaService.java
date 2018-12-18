@@ -35,8 +35,8 @@ public class LineaService extends GenericServiceImplementation implements Servic
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            LineaDao oLineaDao = new LineaDao(oConnection, ob);
-            ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 1);
+            LineaDao oLineaDao = new LineaDao(oConnection, ob,oRequest);
+            ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 1,oRequest);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
         } catch (Exception ex) {
@@ -57,7 +57,7 @@ public class LineaService extends GenericServiceImplementation implements Servic
             Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            LineaDao oLineaDao = new LineaDao(oConnection, ob,oRequest);
             int registros = oLineaDao.getcountxlinea(id_factura);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(registros));

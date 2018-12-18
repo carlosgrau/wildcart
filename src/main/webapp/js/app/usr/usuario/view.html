@@ -33,12 +33,15 @@
 
                                         <tr>
                                             <td>Cambiar Contraseña</td>
-                                            <td> <input type="password" class="form-control" ng-model="ajaxDataUsuarios.password" id="password" placeholder="Contraseña"></td>
+                                            <td> <input type="password" class="form-control" ng-model="ajaxDataUsuarios.password" id="password" placeholder="Contraseña" ></td>
                                         </tr>
                                     </tbody>
                                 </table>
 
-                                <a href="#" class="btn btn-primary">Cambiar la contraseña</a>
+                                <a ng-click="cambiarPass()" class="btn btn-primary">Cambiar la contraseña</a>
+                                <div ng-show="cambioPassword" class="alert alert-success" role="alert">
+                                    Contraseña cambiada con exito.
+                                </div>
                             </div>
                         </div>
                     </div>

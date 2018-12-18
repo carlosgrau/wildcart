@@ -6,6 +6,7 @@
 package net.daw.factory;
 
 import java.sql.Connection;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.dao.specificDaoImplementation.FacturaDao;
 import net.daw.dao.specificDaoImplementation.LineaDao;
 import net.daw.dao.specificDaoImplementation.ProductoDao;
@@ -20,26 +21,26 @@ import net.daw.dao.publicDaoInterface.DaoInterface;
  */
 public class DaoFactory {
 
-    public static DaoInterface getDao(Connection oConnection, String ob) {
+    public static DaoInterface getDao(Connection oConnection, String ob,HttpServletRequest oRequest) {
         DaoInterface oDao = null;
         switch (ob) {
             case "usuario":
-                oDao = new UsuarioDao(oConnection, ob);
+                oDao = new UsuarioDao(oConnection, ob,oRequest);
                 break;
             case "tipousuario":
-                oDao = new TipousuarioDao(oConnection, ob);
+                oDao = new TipousuarioDao(oConnection, ob,oRequest);
                 break;
             case "tipoproducto":
-                oDao = new TipoproductoDao(oConnection, ob);
+                oDao = new TipoproductoDao(oConnection, ob,oRequest);
                 break;
             case "producto":
-                oDao = new ProductoDao(oConnection, ob);
+                oDao = new ProductoDao(oConnection, ob,oRequest);
                 break;
             case "factura":
-                oDao = new FacturaDao(oConnection, ob);
+                oDao = new FacturaDao(oConnection, ob,oRequest);
                 break;
             case "linea":
-                oDao = new LineaDao(oConnection, ob);
+                oDao = new LineaDao(oConnection, ob,oRequest);
                 break;
         }
         return oDao;

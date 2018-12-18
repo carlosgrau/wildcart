@@ -8,6 +8,7 @@ package net.daw.bean.beanImplementation;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.specificDaoImplementation.ProductoDao;
@@ -55,14 +56,14 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         this.obj_Producto = obj_Producto;
     }
 
-    public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+    public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws Exception {
 
         this.setId(oResultSet.getInt("id"));
         this.setCantidad(oResultSet.getInt("cantidad"));
         this.setId_factura(oResultSet.getInt("id_factura"));
         if (expand > 0) {
-            ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
-            this.setObj_Producto((ProductoBean) oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
+            ProductoDao oproductoDao = new ProductoDao(oConnection, "producto",oRequest);
+            this.setObj_Producto((ProductoBean) oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1,oRequest));
         } else {
             this.setId_producto(oResultSet.getInt("id_producto"));
         }

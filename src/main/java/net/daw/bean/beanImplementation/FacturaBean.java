@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
@@ -76,16 +77,15 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         this.link_linea = link_linea;
     }
 
-    @Override
-    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws SQLException, Exception {
+    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setFecha(oResultSet.getDate("fecha"));
         this.setIva(oResultSet.getDouble("iva"));
         if (expand > 0) {
-            DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario");
-            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));
+            DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario",oRequest);
+            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand,oRequest));
         }
-        LineaDao oLineaDao = new LineaDao(oConnection, "linea");
+        LineaDao oLineaDao = new LineaDao(oConnection, "linea",oRequest);
         this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
     }

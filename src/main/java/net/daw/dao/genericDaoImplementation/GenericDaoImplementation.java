@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.factory.BeanFactory;
@@ -25,14 +26,16 @@ public class GenericDaoImplementation implements DaoInterface {
     protected Connection oConnection;
     protected String ob = null;
 
-    public GenericDaoImplementation(Connection oConnection, String ob) {
+    public GenericDaoImplementation(Connection oConnection, String ob,HttpServletRequest oRequest) {
         super();
         this.oConnection = oConnection;
         this.ob = ob;
+        oRequest.getSession();
     }
 
     @Override
-    public BeanInterface get(int id, Integer expand) throws Exception {
+    public BeanInterface get(int id, Integer expand,HttpServletRequest oRequest) throws Exception {
+        Object pepe =oRequest.getSession();
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
         BeanInterface oBean;
         ResultSet oResultSet = null;
@@ -43,7 +46,7 @@ public class GenericDaoImplementation implements DaoInterface {
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 oBean = BeanFactory.getBean(ob);
-                oBean.fill(oResultSet, oConnection, expand);
+                oBean.fill(oResultSet, oConnection, expand,oRequest);
             } else {
                 oBean = null;
             }
@@ -61,7 +64,7 @@ public class GenericDaoImplementation implements DaoInterface {
     }
 
     @Override
-    public int remove(int id) throws Exception {
+    public int remove(int id,HttpServletRequest oRequest) throws Exception {
         int iRes = 0;
         String strSQL = "DELETE FROM " + ob + " WHERE id=?";
         PreparedStatement oPreparedStatement = null;
@@ -80,7 +83,7 @@ public class GenericDaoImplementation implements DaoInterface {
     }
 
     @Override
-    public int getcount() throws Exception {
+    public int getcount(HttpServletRequest oRequest) throws Exception {
         String strSQL = "SELECT COUNT(id) FROM " + ob;
         int res = 0;
         ResultSet oResultSet = null;
@@ -105,7 +108,7 @@ public class GenericDaoImplementation implements DaoInterface {
     }
 
     @Override
-    public BeanInterface create(BeanInterface oBean) throws Exception {
+    public BeanInterface create(BeanInterface oBean,HttpServletRequest oRequest) throws Exception {
         String strSQL = "INSERT INTO " + ob;
         strSQL += "(" + oBean.getColumns() + ")";
         strSQL += " VALUES ";
@@ -135,7 +138,7 @@ public class GenericDaoImplementation implements DaoInterface {
     }
 
     @Override
-    public int update(BeanInterface oBean) throws Exception {
+    public int update(BeanInterface oBean,HttpServletRequest oRequest) throws Exception {
         int iResult = 0;
         String strSQL = "UPDATE " + ob + " SET ";
         strSQL += oBean.getPairs();
@@ -155,7 +158,7 @@ public class GenericDaoImplementation implements DaoInterface {
     }
 
     @Override
-    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand,HttpServletRequest oRequest) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
@@ -169,7 +172,7 @@ public class GenericDaoImplementation implements DaoInterface {
                 alBean = new ArrayList<BeanInterface>();
                 while (oResultSet.next()) {
                     BeanInterface oBean = BeanFactory.getBean(ob);
-                    oBean.fill(oResultSet, oConnection, expand);
+                    oBean.fill(oResultSet, oConnection, expand,oRequest);
                     alBean.add(oBean);
                 }
             } catch (SQLException e) {
@@ -188,5 +191,4 @@ public class GenericDaoImplementation implements DaoInterface {
         return alBean;
 
     }
-
 }

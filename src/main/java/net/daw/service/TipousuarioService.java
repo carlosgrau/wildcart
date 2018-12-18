@@ -33,8 +33,8 @@ public class TipousuarioService extends GenericServiceImplementation implements 
             String desc = oRequest.getParameter("desc");
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, ob);
-            TipousuarioBean oTipousuarioBean = oTipousuarioDao.getbydesc(desc, 1);
+            TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, ob,oRequest);
+            TipousuarioBean oTipousuarioBean = oTipousuarioDao.getbydesc(desc, 1,oRequest);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(oTipousuarioBean));
         } catch (Exception ex) {

@@ -8,6 +8,7 @@ package net.daw.bean.beanImplementation;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
@@ -81,9 +82,8 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
     public void setObj_TipoproductoBean(TipoproductoBean obj_TipoproductoBean) {
         this.obj_TipoproductoBean = obj_TipoproductoBean;
     }
-
     @Override
-    public ProductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+    public ProductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,HttpServletRequest oRequest) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setCodigo(oResultSet.getString("codigo"));
         this.setDesc(oResultSet.getString("desc"));
@@ -91,8 +91,8 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         this.setPrecio(oResultSet.getFloat("precio"));
         this.setFoto(oResultSet.getString("foto"));
         if (expand > 0) {
-            DaoInterface oTipoproductoDao = DaoFactory.getDao(oConnection, "tipoproducto");
-            this.setObj_TipoproductoBean((TipoproductoBean) oTipoproductoDao.get(oResultSet.getInt("id_tipoProducto"), expand - 1));
+            DaoInterface oTipoproductoDao = DaoFactory.getDao(oConnection, "tipoproducto",oRequest);
+            this.setObj_TipoproductoBean((TipoproductoBean) oTipoproductoDao.get(oResultSet.getInt("id_tipoProducto"), expand - 1,oRequest));
         }
         return this;
 

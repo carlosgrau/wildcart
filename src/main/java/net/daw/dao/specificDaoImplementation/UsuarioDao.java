@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.beanImplementation.UsuarioBean;
+import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.helper.EncodingHelper;
@@ -20,12 +22,12 @@ import net.daw.helper.EncodingHelper;
  */
 public class UsuarioDao extends GenericDaoImplementation implements DaoInterface {
 
-    public UsuarioDao(Connection oConnection, String ob) {
-        super(oConnection, ob);
+    public UsuarioDao(Connection oConnection, String ob,HttpServletRequest oRequest) {
+        super(oConnection, ob,oRequest);
 
     }
 
-    public UsuarioBean login(String strUserName, String strPassword) throws Exception {
+    public UsuarioBean login(String strUserName, String strPassword,HttpServletRequest oRequest) throws Exception {
 
         String strSQL = "SELECT * FROM " + ob + " WHERE login=? AND pass=?";
         UsuarioBean oUsuarioBean;
@@ -38,7 +40,7 @@ public class UsuarioDao extends GenericDaoImplementation implements DaoInterface
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 oUsuarioBean = new UsuarioBean();
-                oUsuarioBean.fill(oResultSet, oConnection, 1);
+                oUsuarioBean.fill(oResultSet, oConnection, 1,oRequest);
             } else {
                 oUsuarioBean = null;
             }
@@ -79,5 +81,4 @@ public class UsuarioDao extends GenericDaoImplementation implements DaoInterface
         }
         return iResult;
     }
-
 }

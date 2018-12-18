@@ -22,7 +22,7 @@ moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolServi
         $scope.cambiarPass = function () {
             $http({
                 method: 'GET',
-                url: '/json?ob=usuario&op=changepassword&id=' + $routeParams.id + 'pass=' + forge_sha256($scope.ajaxDataUsuarios.password)
+                url: '/json?ob=usuario&op=changepassword&id=' + $routeParams.id + '&pass=' + forge_sha256($scope.ajaxDataUsuarios.password)
             }).then(function (response) {
                 if (response.status === 200) {
                     $scope.cambioPassword = true;
