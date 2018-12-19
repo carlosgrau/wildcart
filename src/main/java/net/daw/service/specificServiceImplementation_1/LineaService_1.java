@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.beanImplementation.LineaBean;
 import net.daw.bean.beanImplementation.ReplyBean;
-import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
@@ -32,7 +31,7 @@ public class LineaService_1 extends GenericServiceImplementation implements Serv
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
         try {
-            Integer id_factura = Integer.parseInt(oRequest.getParameter("idfactura"));
+            Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
             Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
@@ -56,7 +55,7 @@ public class LineaService_1 extends GenericServiceImplementation implements Serv
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
         try {
-            Integer id_factura = Integer.parseInt(oRequest.getParameter("idfactura"));
+            Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             LineaDao_1 oLineaDao = new LineaDao_1(oConnection, ob, oUsuarioBeanSession);

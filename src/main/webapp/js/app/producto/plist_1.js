@@ -33,7 +33,7 @@ moduleProducto.controller('productoPlistControllerAdm', ['$scope', '$http', '$lo
             }
         }
         $scope.resetOrder = function () {
-            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page);
+            $location.url(`producto/plist_1/` + $scope.rpp + `/` + $scope.page);
         }
 
 
@@ -45,7 +45,7 @@ moduleProducto.controller('productoPlistControllerAdm', ['$scope', '$http', '$lo
                 $scope.orderURLServidor = $scope.orderURLServidor + "-" + order + "," + align;
                 $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
             }
-            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
+            $location.url(`producto/plist_1/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
         }
 
         //getcount
@@ -82,7 +82,7 @@ moduleProducto.controller('productoPlistControllerAdm', ['$scope', '$http', '$lo
         });
 
         $scope.update = function () {
-            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+            $location.url(`producto/plist_1/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
         $scope.addProducto = function (id) {
 
