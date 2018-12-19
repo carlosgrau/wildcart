@@ -23,17 +23,17 @@ import net.daw.helper.EncodingHelper;
  *
  * @author a044531896d
  */
-public class FacturaBean extends GenericBeanImplementation implements BeanInterface{
+public class FacturaBean extends GenericBeanImplementation implements BeanInterface {
 
-@Expose
+    @Expose
     private Date fecha;
-@Expose
+    @Expose
     private double iva;
-  @Expose(serialize = false)
+    @Expose(serialize = false)
     private int id_usuario;
-@Expose(deserialize = false)
+    @Expose(deserialize = false)
     private UsuarioBean obj_Usuario;
-  @Expose
+    @Expose
     private int link_linea;
 
     public UsuarioBean getObj_Usuario() {
@@ -75,23 +75,24 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
     public void setLink_linea(int link_linea) {
         this.link_linea = link_linea;
     }
-    
- @Override
-   public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,UsuarioBean oUsuarioBeanSession) throws SQLException, Exception {
-       this.setId(oResultSet.getInt("id"));
+
+    @Override
+    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws SQLException, Exception {
+        this.setId(oResultSet.getInt("id"));
         this.setFecha(oResultSet.getDate("fecha"));
         this.setIva(oResultSet.getInt("iva"));
-        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea",oUsuarioBeanSession);
+        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
         this.setLink_linea(oLineaDao.getcountxlinea(this.id));
         if (expand > 0) {
-            UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, "usuario",oUsuarioBeanSession);
+            UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, "usuario", oUsuarioBeanSession);
             this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand - 1));
         } else {
             this.setId_usuario(oResultSet.getInt("id_usuario"));
         }
         return this;
-}
-   @Override
+    }
+
+    @Override
     public String getPairs() {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
@@ -110,8 +111,8 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         return strPairs;
 
     }
-    
- @Override
+
+    @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -120,23 +121,23 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         strColumns += "id_usuario";
         return strColumns;
     }
-    
- @Override
+
+    @Override
     public String getValues() {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
-        
+
         Instant instant = fecha.toInstant();
-        
+
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
         System.out.println("Local Date is: " + localDate);
         String strColumns = "";
         strColumns += "null,";
         strColumns += EncodingHelper.quotate(localDate.toString()) + ",";
         strColumns += iva + ",";
-        if(getObj_Usuario() != null){
-        strColumns += this.getObj_Usuario().getId();
-        }else{
+        if (getObj_Usuario() != null) {
+            strColumns += this.getObj_Usuario().getId();
+        } else {
             strColumns += this.getId_usuario();
         }
         return strColumns;

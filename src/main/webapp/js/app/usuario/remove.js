@@ -6,7 +6,7 @@ moduleTipousuario.controller('usuarioRemoveControllerAdm', ['$scope', '$http', '
         $http({
             method: 'GET',
             withCredentials: true,
-            url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id=' + $routeParams.id
+            url: 'json?ob=usuario&op=get&id=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
@@ -28,7 +28,7 @@ moduleTipousuario.controller('usuarioRemoveControllerAdm', ['$scope', '$http', '
             $http({
                 method: 'GET',
                 withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=remove&id=' + $routeParams.id
+                url: 'json?ob=usuario&op=remove&id=' + $routeParams.id
             }).then(function (response) {
                 $scope.boton = false;
                 $scope.mensaje = true;

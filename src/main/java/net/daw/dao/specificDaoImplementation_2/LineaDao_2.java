@@ -46,9 +46,6 @@ public class LineaDao_2 extends GenericDaoImplementation implements DaoInterface
                 oLineaBean = new LineaBean();
                 oLineaBean.fill(oResultSet, oConnection, 2, oUsuarioBeanSession);
                 oFacturaBean = oLineaBean.getObj_Factura();
-                //DaoInterface oDao = DaoFactory.getDao(oConnection, "factura", oUsuarioBeanSession);
-                //oFacturaBean = (FacturaBean) oDao.get(oLineaBean.getId_factura() , 1);
-                //Comprobar que la linea pertenece a una factura del usuario:
                 if (oFacturaBean.getObj_Usuario().getId() != oUsuarioBeanSession.getId()) {
                     oLineaBean = null;
                 }

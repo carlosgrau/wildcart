@@ -13,6 +13,7 @@ import net.daw.bean.beanImplementation.ProductoBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation_1.ProductoDao_1;
+import net.daw.dao.specificDaoImplementation_2.ProductoDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
@@ -41,7 +42,7 @@ public class ProductoService_2 extends GenericServiceImplementation implements S
             Integer number = Integer.parseInt(oRequest.getParameter("number"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            ProductoDao_1 oProductoDao = new ProductoDao_1(oConnection, ob, oUsuarioBeanSession);
+            ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, ob, oUsuarioBeanSession);
             productos = oRellenarService.RellenarProducto(number);
             for (ProductoBean producto : productos) {
                 oProductoDao.create(producto);

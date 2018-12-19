@@ -133,7 +133,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
             this.setLink_factura(oFacturaDao_1.getcountFacturaUser(id));
         } else {
             FacturaDao_2 oFacturaDao_2 = (FacturaDao_2) oFacturaDao;
-            this.setLink_factura(oFacturaDao_2.getcountXusuario(id));
+            this.setLink_factura(oFacturaDao_2.getcountFacturaUser(id));
         }
         }
         if (expand > 0) {

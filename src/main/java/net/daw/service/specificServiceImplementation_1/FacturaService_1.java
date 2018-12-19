@@ -37,7 +37,7 @@ public class FacturaService_1 extends GenericServiceImplementation implements Se
             oConnection = oConnectionPool.newConnection();
             //FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);               
             FacturaDao_1 oDao = (FacturaDao_1) DaoFactory.getDao(oConnection, ob, oUsuarioBeanSession);
-            Integer registros = oDao.getcountXusuario(id);
+            Integer registros = oDao.getcountFacturaUser(id);
 
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(registros));

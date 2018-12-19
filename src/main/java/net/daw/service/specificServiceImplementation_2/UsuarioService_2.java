@@ -17,6 +17,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation_0.UsuarioDao_0;
 import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
+import net.daw.dao.specificDaoImplementation_2.UsuarioDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
@@ -42,7 +43,7 @@ public class UsuarioService_2 extends GenericServiceImplementation implements Se
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, ob, oUsuarioBeanSession);
+            UsuarioDao_2 oUsuarioDao = new UsuarioDao_2(oConnection, ob, oUsuarioBeanSession);
             UsuarioBean oUsuarioBean = new UsuarioBean();
             for (int i = 1; i <= number; i++) {
                 oUsuarioBean.setDni("765934875A");
@@ -126,7 +127,7 @@ public class UsuarioService_2 extends GenericServiceImplementation implements Se
             try {
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, "usuario",oUsuarioBeanSession);
+                UsuarioDao_2 oUsuarioDao = new UsuarioDao_2(oConnection, "usuario",oUsuarioBeanSession);
                 iRes = oUsuarioDao.updatePass(id,pass, oUsuarioBeanSession);
                 oReplyBean = new ReplyBean(200, Integer.toString(iRes));
             } catch (Exception e) {

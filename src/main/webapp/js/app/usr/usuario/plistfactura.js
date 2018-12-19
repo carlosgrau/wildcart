@@ -162,7 +162,7 @@ moduleUsuario.controller('usuarioPlistFacturaControllerUsr', ['$scope', 'toolSer
                     doc.text(14, 72, '54861 Valencia (Valencia)');
                     doc.setFontSize(30);
                     doc.setFontType('bold');
-                    doc.text(125, 23, 'Factura N 25');
+                    doc.text(125, 23, 'Factura N '+id);
                     doc.setFontSize(16);
                     doc.setFontType('normal');
                     doc.text(125, 40, 'Cliente. ' + usuario);
@@ -198,7 +198,7 @@ moduleUsuario.controller('usuarioPlistFacturaControllerUsr', ['$scope', 'toolSer
                             doc.text(14, 72, '54861 Valencia (Valencia)');
                             doc.setFontSize(30);
                             doc.setFontType('bold');
-                            doc.text(125, 23, 'Factura N 25');
+                            doc.text(125, 23, 'Factura N '+id);
                             doc.setFontSize(16);
                             doc.setFontType('normal');
                             doc.text(125, 40, 'Cliente. ' + usuario);

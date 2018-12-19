@@ -38,9 +38,8 @@ public class FacturaService_2 extends GenericServiceImplementation implements Se
                 Integer id = Integer.parseInt(oRequest.getParameter("id"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                //FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);
                 FacturaDao_2 oDao = (FacturaDao_2) DaoFactory.getDao(oConnection, ob,oUsuarioBeanSession);
-                Integer registros=oDao.getcountXusuario(id);                              
+                Integer registros=oDao.getcountFacturaUser(id);                              
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(registros));
             } catch (Exception ex) {
@@ -57,12 +56,13 @@ public class FacturaService_2 extends GenericServiceImplementation implements Se
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
             try {
+                
                 Integer id_usuario = Integer.parseInt(oRequest.getParameter("id"));
                 Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
                 Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);
+                FacturaDao_2 oFacturaDao = new FacturaDao_2(oConnection, ob, oUsuarioBeanSession);
                 ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1);
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));

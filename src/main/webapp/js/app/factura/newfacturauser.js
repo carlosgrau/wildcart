@@ -24,7 +24,7 @@ moduleFactura.controller('facturaNewUserControllerAdm', ['$scope', '$http', '$ro
                 id: $scope.ajaxDatoFactura.id,
                 fecha: $scope.myDate,
                 iva: $scope.ajaxDatoFactura.iva,
-                obj_Usuario:{id:$routeParams.id}
+                id_usuario:$routeParams.id
             };
             $http({
                 method: 'GET',

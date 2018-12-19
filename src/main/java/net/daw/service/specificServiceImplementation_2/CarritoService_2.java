@@ -119,37 +119,55 @@ public class CarritoService_2 {
     }
 
     public ReplyBean reduce() throws Exception {
-        ConnectionInterface oConnectionPool = null;
-        //Obtenemos la sesion actual
-        HttpSession sesion = oRequest.getSession();
+
         ReplyBean oReplyBean;
-        try {
+        if (checkPermission("reduce")) {
 
-            //Si no existe la sesion creamos al carrito
-            carrito = (ArrayList<ItemBean>) sesion.getAttribute("cart");
+            HttpSession sesion = oRequest.getSession();
 
-            //Obtenemos el producto que deseamos aÃ±adir al carrito
-            Integer id = Integer.parseInt(oRequest.getParameter("prod"));
+            if (sesion.getAttribute("carrito") == null) {
+                oReplyBean = new ReplyBean(200, EncodingHelper.quotate("No hay carrito"));
+            } else {
+                carrito = (ArrayList<ItemBean>) sesion.getAttribute("carrito");
+                Integer id = Integer.parseInt(oRequest.getParameter("prod"));
 
-            //Para saber si tenemos agregado el producto al carrito de compras
-            int indice = -1;
-            //recorremos todo el carrito de compras
-            for (int i = 0; i < carrito.size(); i++) {
-                if (id == carrito.get(i).getObj_producto().getId()) {
-                    carrito.remove(i);
-                    break;
+                int indice = -1;
+
+                for (int i = 0; i < carrito.size(); i++) {
+                    if (id == carrito.get(i).getObj_producto().getId()) {
+                        indice = i;
+                        break;
+                    }
+                }
+
+                if (indice == -1) {
+                    oReplyBean = new ReplyBean(200, EncodingHelper.quotate("El producto no esta en el carrito"));
+                } else {
+                    int cantidad = carrito.get(indice).getCantidad();
+                    if (carrito.get(indice).getCantidad() > 1) {
+                        carrito.get(indice).setCantidad(cantidad - 1);
+                        sesion.setAttribute("carrito", carrito);
+                        oReplyBean = new ReplyBean(200, oGson.toJson(carrito));
+                    } else {
+                        carrito.remove(indice);
+                    }
+
+                    if (carrito.size() < 1) {
+                        sesion.setAttribute("carrito", null);
+                        oReplyBean = new ReplyBean(200, EncodingHelper.quotate("Carrito vacio"));
+
+                    } else {
+                        sesion.setAttribute("carrito", carrito);
+                        oReplyBean = new ReplyBean(200, oGson.toJson(carrito));
+                    }
+
                 }
             }
-            //Actualizamos la sesion del carrito de compras
-            sesion.setAttribute("cart", carrito);
-
-            oReplyBean = new ReplyBean(200, oGson.toJson(carrito));
-
-        } catch (Exception ex) {
-//            Logger.getLogger(CartService.class.getName()).log(Level.SEVERE, null, ex);
-            oReplyBean = new ReplyBean(500, "Error en reduce CartService: " + ex.getMessage());
+        } else {
+            oReplyBean = new ReplyBean(401, "Unauthorized");
         }
         return oReplyBean;
+
     }
 
     public ReplyBean show() throws Exception {
