@@ -1,6 +1,6 @@
 'use strict'
 
-moduleTipoproducto.controller('tipoproductoRemoveController', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
+moduleTipoproducto.controller('tipoproductoRemoveControllerAdm', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
     function ($scope, $http,toolService, $routeParams,sessionService) {
 
             $http({

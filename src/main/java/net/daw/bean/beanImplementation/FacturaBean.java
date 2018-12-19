@@ -17,6 +17,7 @@ import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
+import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
 import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -79,17 +80,17 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
     
  @Override
    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand,UsuarioBean oUsuarioBeanSession) throws SQLException, Exception {
-        this.setId(oResultSet.getInt("id"));
-        //Timestamp LUL = oResultSet.getTimestamp("fecha");
-        //this.setFecha(LUL);
+       this.setId(oResultSet.getInt("id"));
         this.setFecha(oResultSet.getDate("fecha"));
-        this.setIva(oResultSet.getDouble("iva"));
+        this.setIva(oResultSet.getInt("iva"));
+        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea",oUsuarioBeanSession);
+        this.setLink_linea(oLineaDao.getcountxlinea(this.id));
         if (expand > 0) {
-            DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario", oUsuarioBeanSession);
-            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));
+            UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, "usuario",oUsuarioBeanSession);
+            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand - 1));
+        } else {
+            this.setId_usuario(oResultSet.getInt("id_usuario"));
         }
-        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
-        this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
 }
    @Override

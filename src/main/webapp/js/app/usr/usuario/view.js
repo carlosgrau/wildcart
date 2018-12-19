@@ -1,6 +1,6 @@
 'use strict'
 
-moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleUsuario.controller('usuarioViewControllerUsr', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
         if(parseInt($routeParams.id) === sessionService.getUserId()){
             

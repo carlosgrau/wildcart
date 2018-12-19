@@ -1,6 +1,6 @@
 'use strict'
 
-moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location', '$filter',
+moduleUsuario.controller('usuarioPlistFacturaControllerUsr', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location', '$filter',
     function ($scope, toolService, $http, sessionService, $routeParams, $location, $filter) {
        if(parseInt($routeParams.id) === sessionService.getUserId()){
            $scope.pagina = true;

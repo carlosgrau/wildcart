@@ -1,5 +1,5 @@
 <header-component></header-component>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+<main role="main" class="col-12" style="margin-top: 50px">
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Productos</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -129,7 +129,7 @@
                     <td>{{fila.existencias}}</td>
                     <td>{{fila.precio}} €</td>
                     <td>{{fila.foto}}</td>
-                    <td><a href="tipoproducto/view/{{fila.obj_TipoproductoBean.id}}">{{fila.obj_TipoproductoBean.desc}}</a></td>
+                    <td><a href="tipoproducto/view/{{fila.obj_tipoProducto.id}}">{{fila.obj_tipoProducto.desc}}</a></td>
                     <td>
                         <a href="producto/view/{{fila.id}}"> <button type="button" class="btn btn-light btn-sm">
                                 <i class="fa fa-eye"></i>

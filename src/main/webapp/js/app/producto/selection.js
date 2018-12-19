@@ -1,5 +1,5 @@
 'use strict';
-moduleComponent.component('productoSelection', {
+moduleComponent.component('productoSelectionAdm', {
     templateUrl: 'js/app/producto/selection.html',
     controllerAs: 'c',
     controller: cController,

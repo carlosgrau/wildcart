@@ -1,6 +1,6 @@
 'use strict'
 
-moduleFactura.controller('facturaRemoveController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleFactura.controller('facturaRemoveControllerAdm', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
 
         $http({

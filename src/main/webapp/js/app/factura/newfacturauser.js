@@ -1,5 +1,5 @@
 'use strict';
-moduleFactura.controller('facturaNewUserController', ['$scope', '$http', '$routeParams', 'sessionService',
+moduleFactura.controller('facturaNewUserControllerAdm', ['$scope', '$http', '$routeParams', 'sessionService',
     function ($scope, $http, $routeParams, sessionService) {
         $scope.idC = $routeParams.id;
 

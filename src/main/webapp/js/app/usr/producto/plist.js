@@ -1,6 +1,6 @@
 'use strict'
 
-moduleProducto.controller('productoPlistUsrController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService','countcarritoService',
+moduleProducto.controller('productoPlistUsrControllerUsr', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService','countcarritoService',
     function ($scope, $http, $location, toolService, $routeParams, sessionService,countcarritoService) {
 
         $scope.totalPages = 1;

@@ -1,6 +1,6 @@
 'use strict'
 
-moduleTipoproducto.controller('tipoproductoEditController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleTipoproducto.controller('tipoproductoEditControllerAdm', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
         $scope.id = $routeParams.id;
         $scope.ajaxData = "";

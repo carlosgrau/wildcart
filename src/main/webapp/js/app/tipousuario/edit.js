@@ -1,6 +1,6 @@
 'use strict'
 
-moduleTipousuario.controller('tipousuarioEditController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleTipousuario.controller('tipousuarioEditControllerAdm', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
         $scope.id = $routeParams.id;
         $scope.ajaxData = "";

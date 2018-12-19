@@ -1,6 +1,6 @@
 'use strict';
 
-moduleProducto.controller('productoNewController', ['$scope', '$http', '$routeParams', 'sessionService',
+moduleProducto.controller('productoNewControllerAdm', ['$scope', '$http', '$routeParams', 'sessionService',
     function ($scope, $http, $routeParams, sessionService) {
         $scope.id = $routeParams.id;
 

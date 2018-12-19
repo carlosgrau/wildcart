@@ -1,6 +1,6 @@
 'use strict'
 
-moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location', '$filter',
+moduleUsuario.controller('usuarioPlistFacturaControllerAdm', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location', '$filter',
     function ($scope, toolService, $http, sessionService, $routeParams, $location, $filter) {
         $scope.totalPages = 1;
         $scope.id = $routeParams.id;

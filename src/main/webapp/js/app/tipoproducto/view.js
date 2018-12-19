@@ -1,13 +1,8 @@
 'use strict'
 
-moduleTipoproducto.controller('tipoproductoViewController', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
+moduleTipoproducto.controller('tipoproductoViewControllerAdm', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
     function ($scope, $http, toolService, $routeParams,sessionService) {
-        
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
+
             $http({
                 method: 'GET',
 //                withCredentials: true,

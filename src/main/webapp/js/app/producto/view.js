@@ -1,6 +1,6 @@
 'use strict'
 
-moduleProducto.controller('productoViewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleProducto.controller('productoViewControllerAdm', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
         if (sessionService.getTipoUserId() === 1) {
             $scope.isAdmin = true;

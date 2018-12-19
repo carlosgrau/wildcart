@@ -1,6 +1,6 @@
 'use strict'
 
-moduleLinea.controller('lineaNewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleLinea.controller('lineaNewControllerAdm', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
         $scope.idfactura = $routeParams.id;
         $scope.ajaxData = "";

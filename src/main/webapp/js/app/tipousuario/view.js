@@ -1,6 +1,6 @@
 'use strict'
 
-moduleTipousuario.controller('tipousuarioViewController', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
+moduleTipousuario.controller('tipousuarioViewControllerAdm', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
     function ($scope, $http, toolService, $routeParams,sessionService) {
         
         if (sessionService) {
