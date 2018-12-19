@@ -5,17 +5,14 @@
  */
 package net.daw.service.specificServiceImplementation_2;
 
-import net.daw.service.specificServiceImplementation_1.*;
 import com.google.gson.Gson;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.beanImplementation.FacturaBean;
 import net.daw.bean.beanImplementation.ReplyBean;
-import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
 import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
 import net.daw.factory.ConnectionFactory;
