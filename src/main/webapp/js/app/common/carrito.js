@@ -49,14 +49,16 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 $scope.cantidadTotal = 0;
                 $scope.precioTotalProd = 0.0;
                 countcarritoService.updateCarrito();
+                 if (($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null)) {
+                $scope.carrito = false;
+                $scope.carritoVacio = true;
+                $scope.carritoComprado = false;
+            } else {
                 for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
                     $scope.cantidadTotal += response.data.message[i].cantidad;
                     $scope.precioTotalProd += (response.data.message[i].obj_producto.precio * response.data.message[i].cantidad);
                 }
-                if (($scope.cantidadTotal === 0) || ($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null) || ($scope.ajaxCarrito === '')) {
-                    $scope.carrito = false;
-                    $scope.carritoVacio = true;
-                }
+            }
 
             }, function (response) {
                 $scope.status = response.status;
@@ -89,34 +91,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 $scope.ajaxCarrito = response.data.message || 'Request failed';
             });
         };
-        $scope.restarProducto = function (id, cantidad) {
-            if (cantidad <= 0) {
-                cantidad = 0;
-                $scope.deleteProducto(id);
-            }
-            $http({
-                method: 'GET',
-                url: '/json?ob=carrito&op=update&prod=' + id + '&cant=' + cantidad
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.ajaxCarrito = response.data.message;
-                countcarritoService.updateCarrito();
-                $scope.carrito = true;
-                $scope.cantidadTotal = 0;
-                $scope.precioTotalProd = 0.0;
-                if (($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null)) {
-                    $scope.carrito = false;
-                } else {
-                    for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
-                        $scope.cantidadTotal += response.data.message[i].cantidad;
-                        $scope.precioTotalProd += (response.data.message[i].obj_producto.precio * response.data.message[i].cantidad);
-                    }
-                }
-            }, function (response) {
-                $scope.status = response.status;
-                $scope.ajaxCarrito = response.data.message || 'Request failed';
-            });
-        };
+        
         $scope.buyCart = function () {
 
             $http({

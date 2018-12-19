@@ -1,11 +1,11 @@
 <header-component></header-component>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+<main role="main" class="col-12" style="margin-top: 50px" ng-if="pagina">
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2"><a href="usr/usuario/view/{{ajaxDatosUsuarios.id}}">Usuario: {{ajaxDatosUsuarios.nombre}} {{ajaxDatosUsuarios.ape1}}</a></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group" style="width:400px;">
                 <p class="mt-2" style="width:200px;">Selecciona RPP: </p>
-                <select class="form-control" ng-change="update()" ng-model="rpp">
+                <select class="form-control" ng-change="actualiza()" ng-model="rpp">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>

@@ -4,7 +4,14 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
     function ($scope, toolService, $http, sessionService, $routeParams, $location) {
         $scope.id = $routeParams.id;
         $scope.totalPages = 1;
+        $scope.isAdmin = false;
+        $scope.isUser = false;
 
+        if (sessionService.getTipoUserId() === 1) {
+            $scope.isAdmin = true;
+        } else {
+            $scope.isUser = true;
+        }
         if (!$routeParams.order) {
             $scope.orderURLServidor = "";
             $scope.orderURLCliente = "";
@@ -47,7 +54,7 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob=linea&op=getcountxlinea&id='+$routeParams.id
+            url: '/json?ob=linea&op=getcountxlinea&id=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDatoLineaFactura = response.data.message;
@@ -64,7 +71,7 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
 
         $http({
             method: 'GET',
-            url: '/json?ob=linea&op=getlineafactura&rpp=' + $scope.rpp + '&page=' + $scope.page +'&id='+$routeParams.id + $scope.orderURLServidor
+            url: '/json?ob=linea&op=getlineafactura&rpp=' + $scope.rpp + '&page=' + $scope.page + '&id=' + $routeParams.id + $scope.orderURLServidor
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDatoLineaFactura = response.data.message;
@@ -74,9 +81,9 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
             $scope.ajaxDatoLineaFactura = response.data.message || 'Request failed';
         });
 
-      
+
         $scope.update = function () {
-            $location.url(`factura/plistlinea/` +$scope.id+`/`+ $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+            $location.url(`factura/plistlinea/` + $scope.id + `/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
 
         //paginacion neighbourhood

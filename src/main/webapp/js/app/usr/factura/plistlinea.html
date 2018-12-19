@@ -1,5 +1,5 @@
 <header-component></header-component>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+<main role="main" class="col-12" style="margin-top: 5%">
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Factura Nº{{id}}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -17,8 +17,8 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-6">
+    <div class="container-fluid">
+        <div class="container-fluid">
             <nav aria-label="paginacion">
                 <ul class="pagination">
 
@@ -41,20 +41,11 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-3">
-            <p>Resetear ordenado<button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
-                    <i class="fa fa-power-off"></i>
-                </button>
-            </p>
-        </div>
-        <div class="col-3">
-            <a href="/linea/lineafactura/{{id}}"><p>Añadir Linea</p></a>
-        </div>
     </div>
 
 
-    <div class="row" style="margin-top: 25px;">
-        <div class="col-12">
+    <div class="container-fluid" style="margin-top: 25px;">
+        <div class="container-fluid">
             <table class="table table-hover table-dark">
                 <thead>
                     <tr>
@@ -68,7 +59,8 @@
                     <tr ng-repeat="fila in ajaxDatoLineaFactura track by $index">
                         <th class="text-center">{{fila.id}}</th>
                         <td class="text-center">{{fila.cantidad}}</td>
-                        <td class="text-center"><a href="producto/view/{{fila.obj_Producto.id}}">{{fila.obj_Producto.desc}}</a></td>
+                        <td class="text-center" ng-if="isAdmin"><a href="producto/view/{{fila.obj_Producto.id}}">{{fila.obj_Producto.desc}}</a></td>
+                        <td class="text-center" ng-if="isUser"><a href="usr/producto/view/{{fila.obj_Producto.id}}">{{fila.obj_Producto.desc}}</a></td>
                         <td class="text-center">
                             <a href="linea/edit/{{fila.id}}">
                                 <button type="button" class="btn btn-light btn-sm">
@@ -87,8 +79,8 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-6">
+    <div class="container-fluid">
+        <div class="container-fluid">
             <nav aria-label="paginacion">
                 <ul class="pagination">
 

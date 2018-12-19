@@ -29,7 +29,7 @@ public class CarritoService_2 {
     Gson oGson = new Gson();
     //ReplyBean oReplyBean;
     ArrayList<ItemBean> carrito = null;
-    //Connection oConnection = null;
+    Connection oConnection = null;
     UsuarioBean oUsuarioBeanSession;
 
     public CarritoService_2(HttpServletRequest oRequest) {
@@ -69,7 +69,7 @@ public class CarritoService_2 {
                 Integer id = Integer.parseInt(oRequest.getParameter("prod"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto",oUsuarioBeanSession);
+                ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto", oUsuarioBeanSession);
                 ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 1);
 
                 //Para saber si tenemos agregado el producto al carrito de compras
@@ -116,60 +116,40 @@ public class CarritoService_2 {
         }
         return oReplyBean;
 
-
     }
 
-
     public ReplyBean reduce() throws Exception {
-
+        ConnectionInterface oConnectionPool = null;
+        //Obtenemos la sesion actual
+        HttpSession sesion = oRequest.getSession();
         ReplyBean oReplyBean;
-        if (checkPermission("reduce")) {
+        try {
 
-            HttpSession sesion = oRequest.getSession();
+            //Si no existe la sesion creamos al carrito
+            carrito = (ArrayList<ItemBean>) sesion.getAttribute("cart");
 
-            if (sesion.getAttribute("carrito") == null) {
-                oReplyBean = new ReplyBean(200, EncodingHelper.quotate("No hay carrito"));
-            } else {
-                carrito = (ArrayList<ItemBean>) sesion.getAttribute("carrito");
-                Integer id = Integer.parseInt(oRequest.getParameter("prod"));
+            //Obtenemos el producto que deseamos aÃ±adir al carrito
+            Integer id = Integer.parseInt(oRequest.getParameter("prod"));
 
-                int indice = -1;
-
-                for (int i = 0; i < carrito.size(); i++) {
-                    if (id == carrito.get(i).getObj_producto().getId()) {
-                        indice = i;
-                        break;
-                    }
-                }
-
-                if (indice == -1) {
-                    oReplyBean = new ReplyBean(200, EncodingHelper.quotate("El producto no esta en el carrito"));
-                } else {
-                    int cantidad = carrito.get(indice).getCantidad();
-                    if (carrito.get(indice).getCantidad() > 1) {
-                        carrito.get(indice).setCantidad(cantidad - 1);
-                        sesion.setAttribute("carrito", carrito);
-                        oReplyBean = new ReplyBean(200, oGson.toJson(carrito));
-                    } else {
-                        carrito.remove(indice);
-                    }
-
-                    if (carrito.size() < 1) {
-                        sesion.setAttribute("carrito", null);
-                        oReplyBean = new ReplyBean(200, EncodingHelper.quotate("Carrito vacio"));
-
-                    } else {
-                        sesion.setAttribute("carrito", carrito);
-                        oReplyBean = new ReplyBean(200, oGson.toJson(carrito));
-                    }
-
+            //Para saber si tenemos agregado el producto al carrito de compras
+            int indice = -1;
+            //recorremos todo el carrito de compras
+            for (int i = 0; i < carrito.size(); i++) {
+                if (id == carrito.get(i).getObj_producto().getId()) {
+                    carrito.remove(i);
+                    break;
                 }
             }
-        } else {
-            oReplyBean = new ReplyBean(401, "Unauthorized");
+            //Actualizamos la sesion del carrito de compras
+            sesion.setAttribute("cart", carrito);
+
+            oReplyBean = new ReplyBean(200, oGson.toJson(carrito));
+
+        } catch (Exception ex) {
+//            Logger.getLogger(CartService.class.getName()).log(Level.SEVERE, null, ex);
+            oReplyBean = new ReplyBean(500, "Error en reduce CartService: " + ex.getMessage());
         }
         return oReplyBean;
-
     }
 
     public ReplyBean show() throws Exception {
@@ -237,14 +217,14 @@ public class CarritoService_2 {
 
             LineaDao_2 oLineaDao;
             LineaBean oLineaBean;
-            
+
             ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto", oUsuarioBeanSession);
             oLineaDao = new LineaDao_2(oConnection, "linea", oUsuarioBeanSession);
             ProductoBean oProductoBean;
 
             for (ItemBean ib : carrito) {
 
-              int cant = ib.getCantidad();
+                int cant = ib.getCantidad();
 
                 oLineaBean = new LineaBean();
 
@@ -259,7 +239,7 @@ public class CarritoService_2 {
                 oProductoBean.setId(ib.getObj_producto().getId());
 
                 oProductoBean = ib.getObj_producto();
-                
+
                 oProductoBean.setId_tipoProducto(ib.getObj_producto().getId_tipoProducto());
 
                 oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
@@ -291,5 +271,4 @@ public class CarritoService_2 {
         return oReplyBean;
 
     }
-
 }

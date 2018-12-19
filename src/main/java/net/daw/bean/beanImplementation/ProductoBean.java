@@ -10,9 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
-import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.dao.specificDaoImplementation_1.TipoproductoDao_1;
-import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
 /**
@@ -46,13 +44,6 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         this.obj_tipoProducto = obj_tipoProducto;
     }
 
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
     public String getCodigo() {
         return codigo;
     }

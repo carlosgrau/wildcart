@@ -2,6 +2,9 @@
 
 moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
+        if(parseInt($routeParams.id) === sessionService.getUserId()){
+            
+            $scope.pagina= true;
         $scope.cambioPassword = false;
         if (sessionService.getTipoUserId() === 1) {
             $scope.isAdmin = true;
@@ -36,4 +39,6 @@ moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolServi
         }
         $scope.isActive = toolService.isActive;
         
-    }]);
+    }else{
+    $scope.pagina= false;
+}}]);

@@ -2,6 +2,8 @@
 
 moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location', '$filter',
     function ($scope, toolService, $http, sessionService, $routeParams, $location, $filter) {
+       if(parseInt($routeParams.id) === sessionService.getUserId()){
+           $scope.pagina = true;
         $scope.totalPages = 1;
         $scope.id = $routeParams.id;
 
@@ -30,7 +32,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
         }
 
         $scope.resetOrder = function () {
-            $location.url(`usuario/plistfactura/` + $scope.rpp + `/` + $scope.page);
+            $location.url(`usr/usuario/plistfactura/` + $scope.rpp + `/` + $scope.page);
         };
 
 
@@ -42,7 +44,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
                 $scope.orderURLServidor = $scope.orderURLServidor + "-" + order + "," + align;
                 $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
             }
-            $location.url(`usuario/plistfactura/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
+            $location.url(`usr/usuario/plistfactura/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
         };
 
             //getcount
@@ -55,7 +57,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
                 $scope.totalPages = Math.ceil($scope.ajaxDataUsuariosNumber / $scope.rpp);
                 if ($scope.page > $scope.totalPages) {
                     $scope.page = $scope.totalPages;
-                    $scope.update();
+                    $scope.actualiza();
                 }
                 pagination2();
             }, function (response) {
@@ -88,8 +90,8 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
                 $scope.ajaxDatosUsuarios = response.data.message || 'Request failed';
             });
 
-            $scope.update = function () {
-                $location.url(`usuario/plistfactura/` + $scope.id + `/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+            $scope.actualiza = function () {
+                $location.url(`usr/usuario/plistfactura/` + $scope.id + `/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
             };
 
 
@@ -251,6 +253,8 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
 
         
         $scope.isActive = toolService.isActive;
-
+        }else{
+            $scope.pagina = false;
+        }
     }
 ]);

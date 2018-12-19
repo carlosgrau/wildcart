@@ -7,8 +7,10 @@
 
 
     <div class="row" ng-show="!carritoVacio">
-        <div class="col-3">
-            <strong><a href="/producto/plist"><p>Añadir más productos</p></a></strong>
+        <div class="col-3"> 
+            <a href="usr/producto/plist">
+            <button class="btn btn-success"><strong>Añadir más productos</strong></button>
+            </a>
         </div>
         <div class="col-3">
             <button class="btn btn-danger" ng-click="emptyCart()"> <strong>Vaciar el carrito</strong></button>
@@ -43,7 +45,8 @@
                 <tbody>
                     <tr ng-repeat="fila in ajaxCarrito track by $index">
                         <th class="text-center">{{fila.obj_producto.id}}</th>
-                        <td class="text-center"><a href="/producto/view/{{fila.obj_producto.id}}">{{fila.obj_producto.desc}}</a></td>
+                        <td class="text-center" ng-if="isAdmin"><a href="/producto/view/{{fila.obj_producto.id}}">{{fila.obj_producto.desc}}</a></td>
+                        <td class="text-center" ng-if="isUser"><a href="usr/producto/view/{{fila.obj_producto.id}}">{{fila.obj_producto.desc}}</a></td>
                         <td class="text-center">{{fila.obj_producto.precio}} €</td>
                         <td class="text-center">{{fila.cantidad}}</td>
                         <td class="text-center">{{(fila.obj_producto.precio * fila.cantidad).toFixed(2)}} €</td>
@@ -51,13 +54,13 @@
                             <button type="button" style="background-color: lightgreen" ng-click="addProducto(fila.obj_producto.id)" class="btn btn-light btn-sm">
                                 <i class="fas fa-plus"></i>
                             </button>
-                            &nbsp;&nbsp;
+<!--                            &nbsp;&nbsp;
                             <button type="button" style="background-color: lightgoldenrodyellow" ng-click="restarProducto(fila.obj_producto.id,(fila.cantidad-1))" class="btn btn-light btn-sm">
                                 <i class="fa fa-minus"></i>
-                            </button>
+                            </button>-->
                             &nbsp;&nbsp;
-                            <button type="button" style="background-color: lightcoral" ng-click="deleteProducto(fila.obj_producto.id)" class="btn btn-light btn-sm">
-                                <i class="fa fa-times"></i>
+                            <button type="button" style="background-color: lightgoldenrodyellow" ng-click="deleteProducto(fila.obj_producto.id)" class="btn btn-light btn-sm">
+                                <i class="fa fa-minus"></i>
                             </button>
 
                         </td>
@@ -75,8 +78,11 @@
         </div>
     </div>
     <div ng-show="carritoVacio" class="row justify-content-md-center">        
-        <div class="alert alert-dark col-5" style="text-align: center">
+        <div class="alert alert-dark col-5" style="text-align: center"ng-show="isAdmin">
             Tu carrito esta vacío. <a href="producto/plist" class="badge badge-info"> AÑADIR PRODUCTOS </a>
+        </div>
+        <div class="alert alert-dark col-5" style="text-align: center"ng-show="isUser">
+            Tu carrito esta vacío. <a href="usr/producto/plist" class="badge badge-info"> AÑADIR PRODUCTOS </a>
         </div>
     </div>    
     <div ng-show="carritoComprado" class="row justify-content-md-center">        
