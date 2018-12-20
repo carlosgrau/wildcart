@@ -21,13 +21,20 @@ moduleLinea.controller('lineaEditControllerAdm', ['$scope', '$http', 'toolServic
             $scope.ocultar = true;
         }
         $scope.guardar = function () {
+            var id_Prouducto;
+            if ($scope.ajaxDatoProducto === undefined) {
+                
+                id_Prouducto = $scope.ajaxDatoTipoUsuario.obj_Producto.id;
+            } else {
+                id_Prouducto = $scope.ajaxDatoProducto.id;
+            }
             var json = {
                 id: $scope.ajaxDatoTipoUsuario.id,
                 cantidad: $scope.ajaxDatoTipoUsuario.cantidad,
-                id_factura: $scope.ajaxDatoTipoUsuario.id_factura,
-                id_producto: $scope.ajaxDatoTipoUsuario.obj_Producto.id
-
+                id_factura: $scope.ajaxDatoTipoUsuario.obj_Factura.id,
+                id_producto: id_Prouducto
             };
+            console.log(json);
             $http({
                 method: 'GET',
                 withCredentials: true,

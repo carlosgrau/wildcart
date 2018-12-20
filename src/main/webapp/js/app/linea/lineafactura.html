@@ -1,11 +1,11 @@
 <header-component></header-component>
-<div class="container-fluid">
+<div class="container" style="margin-top: 8vh">
     <div class="row">      
         <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
             <div class="primeraParte"></div>
 
             <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-                <h3 style="text-align: center">Editar Linea</h3>
+                <h3 style="text-align: center">Añadir Linea a la Factura {{idfactura}}</h3>
                 <div class="form-group">
 
                     <!--ID-->
@@ -16,7 +16,7 @@
                 <!--CANTIDAD-->
                 <div class="form-group" ng-class="{ 'has-error' : userForm.cantidad.$invalid && !userForm.cantidad.$pristine }">
                     <label>Cantidad</label>
-                    <input type="text" class="form-control" id="cantidad" name="cantidad" ng-model="ajaxDatoTipoUsuario.cantidad" ng-required="true"/>
+                    <input type="text" class="form-control" id="cantidad" name="cantidad" ng-model="cantidad" ng-required="true"/>
                     <div ng-show="!userForm.cantidad.$valid && !userForm.cantidad.$pristine" class="alert alert-danger" role="alert">
                         Cantidad obligatoria.
                     </div>
@@ -27,25 +27,31 @@
                     <input type="text" class="form-control" id="factura" name="factura" ng-disabled="true" ng-model="idfactura" ng-required="true"/>
                 </div>
                 <!--PRODUCTO-->
-                <div class="form-group" ng-class="{ 'has-error' : userForm.producto.$invalid && !userForm.producto.$pristine }">
-                    <producto-selection class="modal fade " id="cadd-location-modal" obj="ajaxDatoTipoUsuario.obj_Producto"></producto-selection>
-                    <div class="form-group">
-                        <label>Producto</label>
-                        <span class="input-group-text fas fa-search"
+                <producto-selection class="modal fade" id="cadd-location-modal" obj="ajaxDatoProducto" 
+                                    on-producto-set="productoRefresh(this,false)"></producto-selection>
 
-                              data-toggle="modal"
-                              data-target="#cadd-location-modal"></span>
-                        <input type="number" 
-                               class="form-control" 
-                               id="obj_tipoUsuario_desc" 
-                               name="obj_Producto_desc" 
-                               ng-model="ajaxDatoTipoUsuario.obj_Producto.id" 
-                               ng-change="productoRefresh()" 
-                               placeholder="Seleccione un producto"/>
-                        <h3><strong>{{ajaxDatoTipoUsuario.obj_Producto.desc}}</strong></h3>
+                <div class="form-group">
+                    <label>Producto</label>       
+                    <div class="input-group">
+                            <span class="input-group-text fas fa-search"
+                                  data-toggle="modal"
+                                  data-target="#cadd-location-modal">                                  
+                            </span>
 
+                        <input ng-model="ajaxDatoProducto.id"
+                               ng-change="productoRefresh(this, true)"
+                               aria-describedby="basic-addon2"
+                               id="id_producto"
+                               name="id_producto"
+                               type="text"
+                               size="5"
+                               ng-model-options="{debounce: 1000}"
+                               maxlength="5" ng-required="true"  class="form-control"
+                               ng-class="{ 'is-invalid' : userForm.id_producto.$invalid && !userForm.id_producto.$pristine, 'is-valid': userForm.id_producto.$valid}"/>
                     </div>
-                </div>
+                    <h3><strong>{{ajaxDatoProducto.desc}}</strong></h3>
+
+                </div> 
 
                 <button ng-click="guardar()" ng-show="!mensaje" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
             </form>

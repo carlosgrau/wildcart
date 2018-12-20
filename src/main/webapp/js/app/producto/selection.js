@@ -1,16 +1,15 @@
 'use strict';
-moduleComponent.component('productoSelectionAdm', {
+moduleComponent.component('productoSelection', {
     templateUrl: 'js/app/producto/selection.html',
     controllerAs: 'c',
     controller: cController,
     bindings: {
         obj: '=',
-        onTipousuarioSet: '&'
+        onProductoSet: '&'
     },
 });
 
 function cController($http) {
-    //console.log("ccontroler....");
     var self = this;
     self.ob = "producto";
     self.page = "1";
@@ -54,9 +53,9 @@ function cController($http) {
 
 
     self.save = function (id, desc) {
-        self.obj={id:id,nombre:desc};
+        self.obj = { id : id, desc: desc};
+        self.onProductoSet();
     };
-
 
     self.ordena = function (order, align) {
         if (self.orderURLServidor === "") {
@@ -73,7 +72,7 @@ function cController($http) {
         $http({
             method: "GET",
             withCredential: true,
-            url: "json?ob=tipousuario&op=getpage&rpp=10&page=1"
+            url: "json?ob=producto&op=getpage&rpp=10&page=1"
         }).then(function (response) {
             self.status = response.status;
             self.data = response.data.message;

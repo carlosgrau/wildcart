@@ -1,7 +1,7 @@
 <header-component></header-component>
-<div class="container-fluid">
+<div class="container">
     <div class="row">      
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+        <main role="main" class="col-12" style="margin-top: 50px">
             <div class="primeraParte"></div>
 
             <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
@@ -24,16 +24,38 @@
                 <!--FACTURA-->
                 <div class="form-group" ng-class="{ 'has-error' : userForm.factura.$invalid && !userForm.factura.$pristine }">
                     <label>Factura</label>
-                    <input type="text" class="form-control" id="factura" name="factura" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.id_factura" ng-required="true"/>
+                    <input type="text" class="form-control" id="factura" name="factura" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.obj_Factura.id" ng-required="true"/>
                 </div>
                 <!--PRODUCTO-->
-                <div class="form-group" ng-class="{ 'has-error' : userForm.producto.$invalid && !userForm.producto.$pristine }">
-                    <label>Cantidad</label>
-                    <input type="text" class="form-control" id="producto" name="producto" ng-model="ajaxDatoTipoUsuario.obj_Producto.desc" ng-required="true"/>
-                    <div ng-show="!userForm.producto.$valid && !userForm.producto.$pristine" class="alert alert-danger" role="alert">
-                        Cantidad obligatoria.
-                    </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.producto.$invalid && !userForm.producto.$pristine}">
+                    <label>Producto</label>
+                    <input type="text" class="form-control" id="producto" name="factura" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.obj_Producto.id" ng-required="true"/>
+                    <h3><strong>{{ajaxDatoTipoUsuario.obj_Producto.desc}}</strong></h3>
                 </div>
+                  <producto-selection class="modal fade" id="cadd-location-modal" obj="ajaxDatoProducto" 
+                                    on-producto-set="productoRefresh(this,false)"></producto-selection>
+
+                <div class="form-group">
+                    <label>Producto</label>       
+                    <div class="input-group">
+                            <span class="input-group-text fas fa-search"
+                                  data-toggle="modal"
+                                  data-target="#cadd-location-modal"
+                                  >                                  
+                            </span>
+
+                        <input ng-model="ajaxDatoProducto.id"
+                               ng-change="productoRefresh(this, true)"
+                               aria-describedby="basic-addon2"
+                               id="id_producto"
+                               name="id_producto"
+                               type="text"
+                               size="5"
+                               ng-model-options="{debounce: 1000}"
+                               maxlength="5" class="form-control"
+                               ng-class="{ 'is-invalid' : userForm.id_producto.$invalid && !userForm.id_producto.$pristine, 'is-valid': userForm.id_producto.$valid}"/>
+                    </div>
+                    <h3><strong>{{ajaxDatoProducto.desc}}</strong></h3>
 
                 <button ng-click="guardar()" ng-show="!mensaje" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
             </form>
