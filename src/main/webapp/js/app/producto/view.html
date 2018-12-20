@@ -1,33 +1,53 @@
 <header-component></header-component>
+
 <main role="main" class="container">
 
-    <div class="mx-auto" style="margin-top: 80px">
-        <table class="table table-hover table-dark">
-            <tr>
-                <th>Id</th>
-                <th>Codigo</th>
-                <th>Descripción</th>
-                <th>Existencias</th>
-                <th>Precio</th>
-                <th>Tipo Producto</th>
-            </tr>
-            <tr>
-                <td>{{ajaxDataProducto.id}}</td>
-                <td>{{ajaxDataProducto.codigo}}</td>
-                <td>{{ajaxDataProducto.desc}}</td>
-                <td>{{ajaxDataProducto.existencias}}</td>
-                <td>{{ajaxDataProducto.precio}}</td>
-                <td><a ng-if="isAdmin" href="tipoproducto/view/{{ajaxDataProducto.obj_tipoProducto.id}}">{{ajaxDataProducto.obj_tipoProducto.desc}}</a>
-                <a ng-if="!isAdmin">{{ajaxDataProducto.obj_TipoproductoBean.desc}}</a></td>
-                <td>
-                    <a href="javascript:window.history.back()">
-                        <button type="button" class="btn btn-light btn-sm">
-                            <i class="fa fa-reply"></i>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-        </table>
+    <div class="container" style="margin-top: 12%;margin-bottom: 40vh">
+        <div class="row">
+            <div class="col-12 " >
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ajaxDataProducto.desc}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center">
+                                <img ng-src="/imagenes/{{ajaxDataProducto.foto}}" class="img-circle img-responsive" width="100%" height="100%">
+                            </div>
+
+                            <div class=" col-md-9 col-lg-9 "> 
+                                <table class="table table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>{{ajaxDataProducto.id}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Código</td>
+                                            <td>{{ajaxDataProducto.codigo}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Existencias</td>
+                                            <td>{{ajaxDataProducto.existencias}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Precio</td>
+                                            <td>{{ajaxDataProducto.precio}} €</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tipo Producto</td>
+                                            <td><a ng-if="isAdmin" href="tipoproducto/view/{{ajaxDataProducto.obj_tipoProducto.id}}">{{ajaxDataProducto.obj_tipoProducto.desc}}</a>
+                                                <a ng-if="!isAdmin">{{ajaxDataProducto.obj_tipoProducto.desc}}</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <footer class="footer" ng-include="'js/app/footer.html'"></footer>
