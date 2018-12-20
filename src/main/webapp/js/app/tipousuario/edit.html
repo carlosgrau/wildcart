@@ -1,37 +1,35 @@
-<header-component></header-component>
-<div class="container-fluid">
-    <div class="row">      
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
-            <div class="primeraParte"></div>
+<header-component></header-component>    
+<main role="main" class="col-12" style="margin-top: 50px;margin-top: 8%">
+    <div class="container">
+        <div class="primeraParte"></div>
 
-            <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-                <h3 style="text-align: center">Editar Tipo Usuario</h3>
-                <div class="form-group">
-                    
-                    <!--ID-->
-                    <label>ID</label>
-                    <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.id" />
-                </div>
-                
-                <!--DESCRIPCION-->
-                <div class="form-group" ng-class="{ 'has-error' : userForm.desc.$invalid && !userForm.desc.$pristine }">
-                    <label>Descripción</label>
-                    <input type="text" class="form-control" id="desc" name="desc" ng-model="ajaxDatoTipoUsuario.desc" ng-required="true"/>
-                    <div ng-show="!userForm.desc.$valid && !userForm.desc.$pristine" class="alert alert-danger" role="alert">
-                        Descripción obligatoria
-                    </div>
-                </div>
+        <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
+            <h3 style="text-align: center">Editar Tipo Usuario</h3>
+            <div class="form-group">
 
-                <button ng-click="guardar()" ng-show="!mensaje" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
-            </form>
-            <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
-            <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
-                Datos actualizados correctamente.
+                <!--ID-->
+                <label>ID</label>
+                <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.id" />
             </div>
-            <div class="alert alert-danger" ng-show="mensajeError">
-                Datos erroneos.
+
+            <!--DESCRIPCION-->
+            <div class="form-group" ng-class="{ 'has-error' : userForm.desc.$invalid && !userForm.desc.$pristine }">
+                <label>Descripción</label>
+                <input type="text" class="form-control" id="desc" name="desc" ng-model="ajaxDatoTipoUsuario.desc" ng-required="true"/>
+                <div ng-show="!userForm.desc.$valid && !userForm.desc.$pristine" class="alert alert-danger" role="alert">
+                    Descripción obligatoria
+                </div>
             </div>
-        </main>
+
+            <button ng-click="guardar()" ng-show="!mensaje" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
+        </form>
+        <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
+        <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+            Datos actualizados correctamente.
+        </div>
+        <div class="alert alert-danger" ng-show="mensajeError">
+            Datos erroneos.
+        </div>
     </div>
-</div>
+</main>
 <footer class="footer" ng-include="'js/app/footer.html'"></footer>

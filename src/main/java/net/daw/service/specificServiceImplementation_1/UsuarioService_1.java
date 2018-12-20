@@ -17,6 +17,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation_0.UsuarioDao_0;
 import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
+import net.daw.dao.specificDaoImplementation_2.UsuarioDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
@@ -108,6 +109,31 @@ public class UsuarioService_1 extends GenericServiceImplementation implements Se
             oReplyBean = new ReplyBean(200, oGson.toJson(oUsuarioBean));
         } else {
             oReplyBean = new ReplyBean(401, "No active session");
+        }
+        return oReplyBean;
+    }
+     public ReplyBean changepassword() throws Exception {
+       Gson oGson = new Gson();
+       int iRes = 0;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        UsuarioBean oUsuarioBeanSession;
+        oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
+        String pass = oRequest.getParameter("pass");
+        int id = Integer.parseInt(oRequest.getParameter("id"));
+        ReplyBean oReplyBean = null;
+        if (oUsuarioBeanSession != null) {
+            try {
+                oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+                oConnection = oConnectionPool.newConnection();
+                UsuarioDao_2 oUsuarioDao = new UsuarioDao_2(oConnection, "usuario",oUsuarioBeanSession);
+                iRes = oUsuarioDao.updatePass(id,pass, oUsuarioBeanSession);
+                oReplyBean = new ReplyBean(200, Integer.toString(iRes));
+            } catch (Exception e) {
+                throw new Exception(e);
+            } finally {
+                oConnectionPool.disposeConnection();
+            }
         }
         return oReplyBean;
     }

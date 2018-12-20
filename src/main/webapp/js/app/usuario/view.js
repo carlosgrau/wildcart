@@ -2,6 +2,7 @@
 
 moduleUsuario.controller('usuarioViewControllerAdm', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
+        $scope.cambioPassword = false;
         if (sessionService.getTipoUserId() === 1) {
             $scope.isAdmin = true;
         } else {
@@ -18,22 +19,17 @@ moduleUsuario.controller('usuarioViewControllerAdm', ['$scope', '$http', 'toolSe
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
-        $scope.logout = function () {
+        $scope.cambiarPass = function () {
             $http({
                 method: 'GET',
-                url: '/json?ob=usuario&op=logout'
+                url: '/json?ob=usuario&op=changepassword&id=' + $routeParams.id + '&pass=' + forge_sha256($scope.ajaxDataUsuarios.password)
             }).then(function (response) {
                 if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
+                    $scope.cambioPassword = true;
                 }
-            })
-        }
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
+            });
+        };
         $scope.isActive = toolService.isActive;
+
 
     }]);

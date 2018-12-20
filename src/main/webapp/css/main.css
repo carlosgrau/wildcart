@@ -8,7 +8,7 @@ body {
 }
 .footer {
    position:absolute;
-   right: 80vh;
+   right: 5%;
     background-color: #f5f5f5;
 }
 
@@ -16,10 +16,10 @@ body > .container {
     padding: 60px 0;
 }
 
-.footer > .container {
+/*.footer > .container {
     padding-right: 0px;
     padding-left: 0px;
-}
+}*/
 
 code {
     font-size: 80%;

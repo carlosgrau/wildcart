@@ -77,8 +77,9 @@ public class UsuarioDao_2 extends GenericDaoImplementation implements DaoInterfa
         String strSQL = "UPDATE " + ob + " SET pass = " + EncodingHelper.quotate(pass) + " WHERE id =" + id + ";";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
+        Integer pepe = usuarioSession.getObj_tipoUsuario().getId();
         try {
-            if(usuarioSession.getId() == id){
+            if(usuarioSession.getId() == id || usuarioSession.getObj_tipoUsuario().getId() == 1){
             oPreparedStatement = oConnection.prepareStatement(strSQL);
             iResult = oPreparedStatement.executeUpdate();
             }else{
